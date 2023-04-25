@@ -3,7 +3,6 @@ package com.car_rent_app_gradle.domain.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -51,29 +50,6 @@ public class EmployeeEntity {
     @Column(name = "employee_salary",nullable = false)
     private Double employeeSalary;
 
-    //spring security
-    @NonNull
-    @Column(name = "employee_login",nullable = false)
-    private String employeeLogin;
-    @NonNull
-    @Column(name = "employee_password",nullable = false)
-    private String employeePassword;
-    @NonNull
-    @Column(name = "employee_role",nullable = false)
-    private String employeePassword;
-    @NonNull
-    @Column(name = "employee_account_non_expired",columnDefinition = "BOOLEAN",nullable = false)
-    private Boolean employeeAccountNonExpired;
-    @NonNull
-    @Column(name = "employee_account_non_locked",columnDefinition = "BOOLEAN",nullable = false)
-    private Boolean employeeAccountNonLocked;
-    @NonNull
-    @Column(name = "employee_credentials_non_expired",columnDefinition = "BOOLEAN",nullable = false)
-    private Boolean employeeCredentialsNonExpired;
-    @NonNull
-    @Column(name = "employee_account_enabled",columnDefinition = "BOOLEAN",nullable = false)
-    private Boolean employeeAccountEnabled;
-
 
     //conns
     @OneToMany(mappedBy = "EmployeeThatRegisteredVehicle")
@@ -81,5 +57,10 @@ public class EmployeeEntity {
 
     @OneToMany(mappedBy = "EmployeeThatManagesReservation")
     List<ReservationEntity> reservationsManagedByEmployee;
+
+    @NonNull
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "employee_details_id", referencedColumnName = "system_user_id",nullable = false)
+    private CarAppUserDetails carAppUserDetails;
 
 }

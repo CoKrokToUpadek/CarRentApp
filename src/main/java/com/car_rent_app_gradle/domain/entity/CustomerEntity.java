@@ -39,28 +39,6 @@ public class CustomerEntity {
     @Column(name = "customer_contact",nullable = false)
     private String customerContact;
 
-    //spring security
-    @NonNull
-    @Column(name = "customer_login",nullable = false)
-    private String customerLogin;
-    @NonNull
-    @Column(name = "customer_password",nullable = false)
-    private String customerPassword;
-    @NonNull
-    @Column(name = "customer_role",nullable = false)
-    private String customerPassword;
-    @NonNull
-    @Column(name = "customer_account_non_expired",columnDefinition = "BOOLEAN",nullable = false)
-    private Boolean customerAccountNonExpired;
-    @NonNull
-    @Column(name = "customer_account_non_locked",columnDefinition = "BOOLEAN",nullable = false)
-    private Boolean customerAccountNonLocked;
-    @NonNull
-    @Column(name = "customer_credentials_non_expired",columnDefinition = "BOOLEAN",nullable = false)
-    private Boolean customerCredentialsNonExpired;
-    @NonNull
-    @Column(name = "customer_account_enabled",columnDefinition = "BOOLEAN",nullable = false)
-    private Boolean customerAccountEnabled;
 
     //conns
     @OneToMany(mappedBy = "customerThatMadeReservation")
@@ -68,4 +46,10 @@ public class CustomerEntity {
 
     @OneToMany(mappedBy = "customerThatPaysForRent")
     private List<RentEntity> rentsPaidByCustomer;
+
+    @NonNull
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_details_id", referencedColumnName = "system_user_id",nullable = false)
+    private CarAppUserDetails carAppUserDetails;
+
 }
