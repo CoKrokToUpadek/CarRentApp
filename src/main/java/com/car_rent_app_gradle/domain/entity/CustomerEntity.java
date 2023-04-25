@@ -50,6 +50,6 @@ public class CustomerEntity {
     @NonNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_details_id", referencedColumnName = "system_user_id",nullable = false)
-    private CarAppUserDetails carAppUserDetails;
+    private CarAppUserDetailsEntity carAppUserDetails;
 
 }

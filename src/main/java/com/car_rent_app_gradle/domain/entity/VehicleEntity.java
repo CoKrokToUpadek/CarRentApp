@@ -23,7 +23,7 @@ public class VehicleEntity {
 
     @NonNull
     @Column(name = "vehicle_model",nullable = false)
-    private Boolean vehicleModel;
+    private String vehicleModel;
 
     @NonNull
     @Column(name = "vehicle_condition",nullable = false)

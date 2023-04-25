@@ -3,6 +3,7 @@ package com.car_rent_app_gradle.domain.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class EmployeeEntity {
     private String employeeResponsibilities;
     @NonNull
     @Column(name = "employee_joined_date",columnDefinition = "DATE",nullable = false)
-    private Date employeeJoinedDate;
+    private LocalDate employeeJoinedDate;
 
     @NonNull
     @Column(name = "employee_salary",nullable = false)
@@ -61,6 +62,6 @@ public class EmployeeEntity {
     @NonNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_details_id", referencedColumnName = "system_user_id",nullable = false)
-    private CarAppUserDetails carAppUserDetails;
+    private CarAppUserDetailsEntity carAppUserDetails;
 
 }

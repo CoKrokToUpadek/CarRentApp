@@ -34,7 +34,7 @@ public class RentEntity {
 
     @NonNull
     @Column(name = "rent_payment_date", columnDefinition = "DATE",nullable = false)
-    private Date rentPaymentDate;
+    private LocalDate rentPaymentDate;
 
     @NonNull
     @Column(name = "rent_damage_compensation",nullable = false)

@@ -3,6 +3,7 @@ package com.car_rent_app_gradle.domain.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -19,8 +20,7 @@ public class ReservationEntity {
 
     @NonNull
     @Column(name = "reservation_pickup_date",nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date reservationPickupDate;
+    private LocalDate reservationPickupDate;
 
     @NonNull
     @Column(name = "reservation_pickup_location",nullable = false)
@@ -35,11 +35,11 @@ public class ReservationEntity {
 
     @NonNull
     @Column(name = "reservation_reserve_date",columnDefinition = "DATE",nullable = false)
-    private Date reservationReserveDate;
+    private LocalDate reservationReserveDate;
 
     @NonNull
     @Column(name = "reservation_return_date",columnDefinition = "DATE",nullable = false)
-    private Date reservationReturnDate;
+    private LocalDate reservationReturnDate;
 
     //conns
     @NonNull

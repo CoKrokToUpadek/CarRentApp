@@ -6,9 +6,10 @@ import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Data
 @Entity(name="system_users")
-public class CarAppUserDetails {
+public class CarAppUserDetailsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
