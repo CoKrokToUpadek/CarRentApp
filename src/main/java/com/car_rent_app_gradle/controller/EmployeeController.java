@@ -1,6 +1,6 @@
 package com.car_rent_app_gradle.controller;
 
-import com.car_rent_app_gradle.domain.dto.CarDto;
+import com.car_rent_app_gradle.domain.dto.VehicleForCustomersDto;
 import com.car_rent_app_gradle.domain.dto.EmployeeDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import java.util.List;
 public class EmployeeController {
 
     @PostMapping("/addNewCar")
-    public ResponseEntity<String> addNewVehicle(@CurrentSecurityContext SecurityContext context, @RequestBody CarDto carDto){
+    public ResponseEntity<String> addNewVehicle(@CurrentSecurityContext SecurityContext context, @RequestBody VehicleForCustomersDto carDto){
         return ResponseEntity.ok("ok mk");
     }
 

@@ -23,7 +23,7 @@ public class VehicleEntity {
 
     @NonNull
     @Column(name = "vehicle_is_available",columnDefinition = "BOOLEAN",nullable = false)//car was removed from car list and its no longer available
-    private Boolean vehicleIsAvailable;
+    private Boolean vehicleNoLongerAvailable;
 
     @NonNull
     @Column(name = "vehicle_brand",nullable = false)
@@ -52,7 +52,6 @@ public class VehicleEntity {
     @NonNull
     @Column(name = "vehicle_millage",nullable = false)
     private Integer vehicleMillage;
-
 
     //conns
     @OneToMany(mappedBy = "vehicleChosenInReservation")

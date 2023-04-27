@@ -26,7 +26,7 @@ public class ReservationEntity {
     @Column(name = "reservation_pickup_location",nullable = false)
     private String reservationPickupLocation;
 
-    @Column(name = "reservation_reserve_date",columnDefinition = "BOOLEAN",nullable = true)
+    @Column(name = "reservation_is_canceled",columnDefinition = "BOOLEAN",nullable = true)
     private Boolean reservationCancelation;
 
     @Column(name = "reservation_cancellation_details",nullable = true)

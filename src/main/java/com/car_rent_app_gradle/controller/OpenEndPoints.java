@@ -1,7 +1,7 @@
 package com.car_rent_app_gradle.controller;
 
 
-import com.car_rent_app_gradle.domain.dto.CarDto;
+import com.car_rent_app_gradle.domain.dto.VehicleForCustomersDto;
 import com.car_rent_app_gradle.domain.dto.CustomerDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,8 +33,8 @@ public class OpenEndPoints {
     }
 
     @GetMapping("/getCarList")
-    public ResponseEntity<List<CarDto>> getVehicleList(@RequestParam String carBrandName){
-        List<CarDto> cars=new ArrayList<>();
+    public ResponseEntity<List<VehicleForCustomersDto>> getVehicleList(@RequestParam String carBrandName){
+        List<VehicleForCustomersDto> cars=new ArrayList<>();
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
     @GetMapping("/hello")//for testing purposes

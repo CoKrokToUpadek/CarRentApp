@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -18,7 +17,9 @@ public class EmployeeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id")
     private Long employeeId;
-
+    @NonNull
+    @Column(name = "employee_security_number", nullable = false)
+    private String employeeSecurityNumber;
     @NonNull
     @Column(name = "employee_first_name", nullable = false)
     private String employeeFirstName;

@@ -8,10 +8,9 @@ import java.time.LocalDate;
 import java.util.Calendar;
 
 
-
+//basic objects tests
 @SpringBootTest
 public class EntityTestSuite {
-
 
     @Test
     public void customerCreationWithDetailsEntityTest(){
@@ -34,7 +33,7 @@ public class EntityTestSuite {
                 "testRole",true,true,
                 true,true);
         //when
-        EmployeeEntity employee=new EmployeeEntity("testFirstName","testLastName","testCountry","testCity",
+        EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
                 "testHouseNo","testContact", LocalDate.of(2000, Calendar.MARCH,2),100.00,details);
         //then
         Assertions.assertEquals(employee.getCarAppUserDetails(),details);
@@ -46,7 +45,7 @@ public class EntityTestSuite {
         CarAppUserDetailsEntity details=new CarAppUserDetailsEntity("testLogin","testPassword",
                 "testRole",true,true,
                 true,true);
-        EmployeeEntity employee=new EmployeeEntity("testFirstName","testLastName","testCountry","testCity",
+        EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
                 "testHouseNo","testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00,details);
         //when
         VehicleEntity vehicle=new VehicleEntity("tempStatus",true,"testBrand","testModel","testType","testCondition",
@@ -61,7 +60,7 @@ public class EntityTestSuite {
         CarAppUserDetailsEntity details=new CarAppUserDetailsEntity("testLogin","testPassword",
                 "testRole",true,true,
                 true,true);
-        EmployeeEntity employee=new EmployeeEntity("testFirstName","testLastName","testCountry","testCity",
+        EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
                 "testHouseNo","testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00,details);
         CustomerEntity customer=new CustomerEntity("testFirstName","testLastName",
                 "TestCode","TestCountry","testCity",
