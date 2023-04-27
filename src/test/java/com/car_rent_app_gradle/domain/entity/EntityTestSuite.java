@@ -49,7 +49,7 @@ public class EntityTestSuite {
         EmployeeEntity employee=new EmployeeEntity("testFirstName","testLastName","testCountry","testCity",
                 "testHouseNo","testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00,details);
         //when
-        VehicleEntity vehicle=new VehicleEntity(true,"testBrand","testCondition",
+        VehicleEntity vehicle=new VehicleEntity("tempStatus",true,"testBrand","testModel","testType","testCondition",
                 100.00,"testPlateNumber",100,employee);
         //then
         Assertions.assertEquals(vehicle.getEmployeeThatRegisteredVehicle(),employee);
@@ -66,7 +66,7 @@ public class EntityTestSuite {
         CustomerEntity customer=new CustomerEntity("testFirstName","testLastName",
                 "TestCode","TestCountry","testCity",
                 "TestHouseNo","TestContacts",details);
-        VehicleEntity vehicle=new VehicleEntity(true,"testBrand","testCondition",
+        VehicleEntity vehicle=new VehicleEntity("tempStatus",true,"testBrand","testModel","testType","testCondition",
                 100.00,"testPlateNumber",100,employee);
         //when
         ReservationEntity reservation=new ReservationEntity(LocalDate.of(2000,2,2),"testPickupLocation",

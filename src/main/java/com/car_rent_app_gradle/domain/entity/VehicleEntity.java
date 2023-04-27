@@ -18,12 +18,24 @@ public class VehicleEntity {
     private Long vehicleId;
 
     @NonNull
-    @Column(name = "vehicle_is_available",columnDefinition = "BOOLEAN",nullable = false)
+    @Column(name = "vehicle_status",nullable = false)//if car is available or its rented/getting fixed
+    private String vehicleStatus;
+
+    @NonNull
+    @Column(name = "vehicle_is_available",columnDefinition = "BOOLEAN",nullable = false)//car was removed from car list and its no longer available
     private Boolean vehicleIsAvailable;
+
+    @NonNull
+    @Column(name = "vehicle_brand",nullable = false)
+    private String vehicleBrand;
 
     @NonNull
     @Column(name = "vehicle_model",nullable = false)
     private String vehicleModel;
+
+    @NonNull
+    @Column(name = "vehicle_type",nullable = false)
+    private String vehicleType;
 
     @NonNull
     @Column(name = "vehicle_condition",nullable = false)
