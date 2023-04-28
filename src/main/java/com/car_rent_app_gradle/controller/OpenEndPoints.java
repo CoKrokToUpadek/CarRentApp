@@ -32,8 +32,8 @@ public class OpenEndPoints {
         return ResponseEntity.ok("im deployed and working");
     }
 
-    @GetMapping("/getCarList")
-    public ResponseEntity<List<VehicleForCustomersDto>> getVehicleList(@RequestParam String carBrandName){
+    @GetMapping("/getVehicleList")
+    public ResponseEntity<List<VehicleForCustomersDto>> getVehicleList(){
         List<VehicleForCustomersDto> cars=new ArrayList<>();
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
