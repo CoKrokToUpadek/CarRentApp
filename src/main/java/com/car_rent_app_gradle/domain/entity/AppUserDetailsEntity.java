@@ -9,7 +9,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @Data
 @Entity(name="system_users")
-public class CarAppUserDetailsEntity {
+public class AppUserDetailsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

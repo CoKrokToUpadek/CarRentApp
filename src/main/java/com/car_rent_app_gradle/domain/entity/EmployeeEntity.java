@@ -42,8 +42,8 @@ public class EmployeeEntity {
     private String employeeContact;
 
     @Column(name = "employee_responsibilities",nullable = true)
-
     private String employeeResponsibilities;
+
     @NonNull
     @Column(name = "employee_joined_date",columnDefinition = "DATE",nullable = false)
     private LocalDate employeeJoinedDate;
@@ -52,7 +52,6 @@ public class EmployeeEntity {
     @Column(name = "employee_salary",nullable = false)
     private Double employeeSalary;
 
-
     //conns
     @OneToMany(mappedBy = "EmployeeThatRegisteredVehicle")
     List<VehicleEntity> vehiclesRegisteredToEmployee;
@@ -60,9 +59,8 @@ public class EmployeeEntity {
     @OneToMany(mappedBy = "EmployeeThatManagesReservation")
     List<ReservationEntity> reservationsManagedByEmployee;
 
-    @NonNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_details_id", referencedColumnName = "system_user_id",nullable = false)
-    private CarAppUserDetailsEntity carAppUserDetails;
+    private AppUserDetailsEntity carAppUserDetails;
 
 }

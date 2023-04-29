@@ -1,7 +1,7 @@
 package com.car_rent_app_gradle.client.security_package;
 
-import com.car_rent_app_gradle.domain.entity.CarAppUserDetailsEntity;
-import com.car_rent_app_gradle.repository.CarAppUserDetailsRepository;
+import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
+import com.car_rent_app_gradle.repository.AppUserDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,26 +15,26 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CarAppUserDetailsService {
     //Remember to make changes to this code each time its used
-    CarAppUserDetailsRepository carAppUserDetailsRepository;
+    AppUserDetailsRepository carAppUserDetailsRepository;
 
     @Autowired
-    public CarAppUserDetailsService(CarAppUserDetailsRepository carAppUserDetailsRepository) {
+    public CarAppUserDetailsService(AppUserDetailsRepository carAppUserDetailsRepository) {
         this.carAppUserDetailsRepository = carAppUserDetailsRepository;
     }
 
-    public CarAppUserDetailsEntity save(CarAppUserDetailsEntity userEntity) {
+    public AppUserDetailsEntity save(AppUserDetailsEntity userEntity) {
         return carAppUserDetailsRepository.save(userEntity);
     }
 
-    public Optional<CarAppUserDetailsEntity> findById(Long id) {
+    public Optional<AppUserDetailsEntity> findById(Long id) {
         return carAppUserDetailsRepository.findById(id);
     }
 
-    public Optional<CarAppUserDetailsEntity> findByLogin(String login) {
+    public Optional<AppUserDetailsEntity> findByLogin(String login) {
         return carAppUserDetailsRepository.findBySystemUserLogin(login);
     }
 
-    public List<CarAppUserDetailsEntity> findAll() {
+    public List<AppUserDetailsEntity> findAll() {
         return carAppUserDetailsRepository.findAll();
     }
 

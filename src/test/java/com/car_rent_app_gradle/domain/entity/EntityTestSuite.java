@@ -15,7 +15,7 @@ public class EntityTestSuite {
     @Test
     public void customerCreationWithDetailsEntityTest(){
         //given
-       CarAppUserDetailsEntity details=new CarAppUserDetailsEntity("testLogin","testPassword",
+       AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword",
                "testRole",true,true,
                true,true);
        //when
@@ -29,12 +29,13 @@ public class EntityTestSuite {
     @Test
     public void employeeCreationWithDetailsEntityTest(){
         //given
-        CarAppUserDetailsEntity details=new CarAppUserDetailsEntity("testLogin","testPassword",
+        AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword",
                 "testRole",true,true,
                 true,true);
         //when
         EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
-                "testHouseNo","testContact", LocalDate.of(2000, Calendar.MARCH,2),100.00,details);
+                "testHouseNo","testContact", LocalDate.of(2000, Calendar.MARCH,2),100.00);
+        employee.setCarAppUserDetails(details);
         //then
         Assertions.assertEquals(employee.getCarAppUserDetails(),details);
     }
@@ -42,11 +43,12 @@ public class EntityTestSuite {
     @Test
     public void employeeRegisteringVehicleEntityTest(){
         //given
-        CarAppUserDetailsEntity details=new CarAppUserDetailsEntity("testLogin","testPassword",
+        AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword",
                 "testRole",true,true,
                 true,true);
         EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
-                "testHouseNo","testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00,details);
+                "testHouseNo","testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00);
+        employee.setCarAppUserDetails(details);
         //when
         VehicleEntity vehicle=new VehicleEntity("tempStatus",true,"testBrand","testModel","testType","testCondition",
                 100.00,"testPlateNumber",100,employee);
@@ -57,11 +59,12 @@ public class EntityTestSuite {
     @Test
     public void customerMakesReservationEntityTest(){
         //given
-        CarAppUserDetailsEntity details=new CarAppUserDetailsEntity("testLogin","testPassword",
+        AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword",
                 "testRole",true,true,
                 true,true);
         EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
-                "testHouseNo","testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00,details);
+                "testHouseNo","testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00);
+        employee.setCarAppUserDetails(details);
         CustomerEntity customer=new CustomerEntity("testFirstName","testLastName",
                 "TestCode","TestCountry","testCity",
                 "TestHouseNo","TestContacts",details);
