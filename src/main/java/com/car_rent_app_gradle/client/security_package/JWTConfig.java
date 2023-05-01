@@ -8,7 +8,6 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -18,7 +17,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -43,9 +41,9 @@ public class JWTConfig {
 
     private final JWTKeyProperties jwtKeyProperties;
 
-    private final UserDetailsService userDetailsService;
+    private final AppUserSpringSecurityDetailsService userDetailsService;
 
-    public JWTConfig(JWTKeyProperties jwtKeyProperties, UserDetailsService userDetailsService) {
+    public JWTConfig(JWTKeyProperties jwtKeyProperties, AppUserSpringSecurityDetailsService userDetailsService) {
         this.jwtKeyProperties = jwtKeyProperties;
         this.userDetailsService = userDetailsService;
     }

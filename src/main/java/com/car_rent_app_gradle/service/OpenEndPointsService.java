@@ -1,6 +1,7 @@
 package com.car_rent_app_gradle.service;
 
 import com.car_rent_app_gradle.client.security_package.TokenService;
+import com.car_rent_app_gradle.domain.dto.TokenAndRoleDto;
 import com.car_rent_app_gradle.domain.dto.VehicleForCustomersDto;
 
 import com.car_rent_app_gradle.mapper.VehicleMapper;
@@ -28,8 +29,8 @@ public class OpenEndPointsService {
         this.tokenService = tokenService;
     }
 
-    public String generateTokenForLogin(Authentication authentication){
-      return   tokenService.generateToken(authentication);
+    public TokenAndRoleDto generateToken(Authentication authentication){
+        return tokenService.generateToken(authentication);
     }
 
     //checks if vehicle is still available for rents
