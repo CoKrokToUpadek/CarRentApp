@@ -22,6 +22,9 @@ public class AppUserDetailsDto {
     @JsonProperty("systemUserPassword")
     private String systemUserPassword;
     @NonNull
+    @JsonProperty("systemUserEmail")
+    private String systemUserEmail;
+    @NonNull
     @JsonProperty("systemUserRole")
     private RolesList systemUserRole;
     @NonNull

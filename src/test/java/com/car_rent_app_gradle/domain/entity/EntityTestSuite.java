@@ -3,6 +3,7 @@ package com.car_rent_app_gradle.domain.entity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -10,18 +11,20 @@ import java.util.Calendar;
 
 //basic objects tests
 @SpringBootTest
+@TestPropertySource("classpath:application-H2TestDb.properties")
 public class EntityTestSuite {
 
     @Test
     public void customerCreationWithDetailsEntityTest(){
         //given
-       AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword",
+       AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword","testEmail",
                "testRole",true,true,
                true,true);
        //when
        CustomerEntity customer=new CustomerEntity("testFirstName","testLastName",
                "TestCode","TestCountry","testCity",
-               "TestHouseNo","TestContacts",details);
+               "TestHouseNo","TestContacts");
+       customer.setCarAppUserDetails(details);
        //then
         Assertions.assertEquals(customer.getCarAppUserDetails(),details);
     }
@@ -29,7 +32,7 @@ public class EntityTestSuite {
     @Test
     public void employeeCreationWithDetailsEntityTest(){
         //given
-        AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword",
+        AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword","testEmail",
                 "testRole",true,true,
                 true,true);
         //when
@@ -43,7 +46,7 @@ public class EntityTestSuite {
     @Test
     public void employeeRegisteringVehicleEntityTest(){
         //given
-        AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword",
+        AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword","testEmail",
                 "testRole",true,true,
                 true,true);
         EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
@@ -59,7 +62,7 @@ public class EntityTestSuite {
     @Test
     public void customerMakesReservationEntityTest(){
         //given
-        AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword",
+        AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword","testEmail",
                 "testRole",true,true,
                 true,true);
         EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
@@ -67,7 +70,8 @@ public class EntityTestSuite {
         employee.setCarAppUserDetails(details);
         CustomerEntity customer=new CustomerEntity("testFirstName","testLastName",
                 "TestCode","TestCountry","testCity",
-                "TestHouseNo","TestContacts",details);
+                "TestHouseNo","TestContacts");
+        customer.setCarAppUserDetails(details);
         VehicleEntity vehicle=new VehicleEntity("tempStatus",true,"testBrand","testModel","testType","testCondition",
                 100.00,"testPlateNumber",100,employee);
         //when

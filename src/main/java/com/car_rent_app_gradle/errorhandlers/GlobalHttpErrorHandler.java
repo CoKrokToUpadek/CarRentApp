@@ -8,15 +8,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(LoginAsEmployeeInCustomerSectionException.class)
-    public ResponseEntity<Object> handleInvalidEmployeeLogin(LoginAsEmployeeInCustomerSectionException exception){
-        return new ResponseEntity<>("Employee login credentials in customer panel", HttpStatus.FORBIDDEN);
+    @ExceptionHandler(EmptyAuthenticationException.class)
+    public ResponseEntity<Object> emptyAuthenticationExceptionHandler(EmptyAuthenticationException exception){
+        return new ResponseEntity<>("Authentication data missing", HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(LoginAsCustomerInEmployeeSectionException.class)
-    public ResponseEntity<Object> handleInvalidCustomerLogin(LoginAsCustomerInEmployeeSectionException exception){
-        return new ResponseEntity<>("Beer Db is empty", HttpStatus.FORBIDDEN);
+    @ExceptionHandler(ApplicationDataBaseException.class)
+    public ResponseEntity<Object> applicationDataBaseExceptionHandler(ApplicationDataBaseException exception){
+        return new ResponseEntity<>("Error while fetching newly created user", HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 
 }

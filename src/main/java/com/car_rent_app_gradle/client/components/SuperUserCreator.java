@@ -31,9 +31,8 @@ public class SuperUserCreator implements CommandLineRunner {
 
     @Override
     public void run(String... args){
-
         if (appUserDetailsRepository.count() == 0 && employeeRepository.count()==0) {
-            AppUserDetailsEntity superUserDetailsEntity=new AppUserDetailsEntity("tempAdmin",encoder.encode("tempPassword"),
+            AppUserDetailsEntity superUserDetailsEntity=new AppUserDetailsEntity("tempAdmin",encoder.encode("tempPassword"),"tempEmail",
                     RolesList.ROLE_ADMIN.toString(),true,true,true,true);
             EmployeeEntity superUserEmployeeEntity=new EmployeeEntity("0","temp","temp","temp",
                     "temp","temp","temp", LocalDate.now(),0.00);

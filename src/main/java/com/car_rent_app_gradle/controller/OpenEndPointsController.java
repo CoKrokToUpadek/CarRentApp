@@ -1,9 +1,11 @@
 package com.car_rent_app_gradle.controller;
 
 
+import com.car_rent_app_gradle.domain.dto.CustomerAccountCreationDto;
 import com.car_rent_app_gradle.domain.dto.TokenAndRoleDto;
 import com.car_rent_app_gradle.domain.dto.VehicleForCustomersDto;
 import com.car_rent_app_gradle.domain.dto.CustomerDto;
+import com.car_rent_app_gradle.errorhandlers.EmptyAuthenticationException;
 import com.car_rent_app_gradle.service.OpenEndPointsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,13 +32,13 @@ public class OpenEndPointsController {
         this.openEndPointsService = openEndPointsService;
     }
 
-    @PostMapping("/createAccount")
-    public ResponseEntity<String> createAccount(@RequestBody CustomerDto customerDto) {
-        return ResponseEntity.ok("im deployed and working");
+    @PostMapping("/createCustomerAccount")
+    public ResponseEntity<String> createAccount(@RequestBody CustomerAccountCreationDto customerAccountCreationDto) {
+        return ResponseEntity.ok(openEndPointsService.createCustomerAccount(customerAccountCreationDto));
     }
-
+    //ok
     @GetMapping("/login")
-    public ResponseEntity<TokenAndRoleDto> login(Authentication authentication) {
+    public ResponseEntity<TokenAndRoleDto> login(Authentication authentication) throws EmptyAuthenticationException {
         return ResponseEntity.ok(openEndPointsService.generateToken(authentication));
     }
 
@@ -56,8 +58,6 @@ public class OpenEndPointsController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     @GetMapping("/helloAuthorized")//for testing purposes
     public ResponseEntity<String> getTestMessageAuthorized() {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        System.out.println(request.getHeader("Authorization"));
         return ResponseEntity.ok("hello from closed endpoint");
     }
 

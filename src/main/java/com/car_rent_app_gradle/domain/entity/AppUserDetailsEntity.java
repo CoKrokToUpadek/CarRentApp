@@ -22,6 +22,9 @@ public class AppUserDetailsEntity {
     @Column(name = "system_user_password",nullable = false)
     private String systemUserPassword;
     @NonNull
+    @Column(name = "system_user_email",nullable = false)
+    private String systemUserEmail;
+    @NonNull
     @Column(name = "system_user_role",nullable = false)
     private String systemUserRole;
     @NonNull
