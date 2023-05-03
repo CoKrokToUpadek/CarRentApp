@@ -5,6 +5,8 @@ import com.car_rent_app_gradle.client.security_package.*;
 import com.car_rent_app_gradle.domain.dto.CustomerAccountCreationDto;
 import com.car_rent_app_gradle.domain.dto.TokenAndRoleDto;
 import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
+import com.car_rent_app_gradle.domain.entity.EmployeeEntity;
+import com.car_rent_app_gradle.domain.entity.VehicleEntity;
 import com.car_rent_app_gradle.mapper.AppUserDetailsMapper;
 import com.car_rent_app_gradle.mapper.CustomerMapper;
 import com.car_rent_app_gradle.mapper.VehicleMapper;
@@ -33,6 +35,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -142,6 +145,32 @@ public class OpenEndpointControllerTestSuite {
                         .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         Assertions.assertEquals("user was created successfully", result.getResponse().getContentAsString());
+    }
+
+
+    @Test
+    void getVehicleListValidTest() throws Exception {
+
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.get("/getVehicleList")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
+        Assertions.assertEquals("No vehicles available", result.getResponse().getContentAsString());
+    }
+
+    @Test
+    void getVehicleListEmptyTest() throws Exception {
+        VehicleEntity vehicle=new VehicleEntity("tempStatus",false,"testBrand",
+                "testModel","testType","testCondition",
+                100.00,"testPlateNumber",100);
+        vehicle.setEmployeeThatRegisteredVehicle(new EmployeeEntity());
+        when(vehicleRepository.findAllByVehicleNoLongerAvailable(false)).thenReturn(List.of(vehicle));
+
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.get("/getVehicleList")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
+        Assertions.assertEquals("[{\"id\":null,\"vehicleStatus\":\"tempStatus\",\"vehicleBrand\":\"testBrand\"," +
+                "\"vehicleModel\":\"testModel\",\"vehicleType\":\"testType\",\"vehicleDailyPrice\":100.0}]",
+                result.getResponse().getContentAsString());
     }
 
 }

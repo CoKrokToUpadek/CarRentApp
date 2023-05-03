@@ -21,7 +21,7 @@ public class VehicleMapper {
         return new VehicleEntity(VehicleStatusList.ADDED_FOR_THE_FIRST_TIME.toString(),vehicle.getVehicleNoLongerAvailable(),
                 vehicle.getVehicleBrand(), vehicle.getVehicleModel(), vehicle.getVehicleType(), vehicle.getVehicleCondition(),
                 vehicle.getVehicleDailyPrice(), vehicle.getVehiclePlateNumber(),
-                vehicle.getVehicleMillage(), new EmployeeEntity());
+                vehicle.getVehicleMillage());
     }
 
     public List<VehicleForCustomersDto> mapToDtoForCustomerList(List<VehicleEntity> vehicleEntityList){

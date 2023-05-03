@@ -6,6 +6,7 @@ import com.car_rent_app_gradle.domain.dto.TokenAndRoleDto;
 import com.car_rent_app_gradle.domain.dto.VehicleForCustomersDto;
 import com.car_rent_app_gradle.domain.dto.CustomerDto;
 import com.car_rent_app_gradle.errorhandlers.EmptyAuthenticationException;
+import com.car_rent_app_gradle.errorhandlers.VehicleListIsEmptyException;
 import com.car_rent_app_gradle.service.OpenEndPointsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,31 +33,29 @@ public class OpenEndPointsController {
         this.openEndPointsService = openEndPointsService;
     }
 
-    @PostMapping("/createCustomerAccount")
+    @PostMapping("/createCustomerAccount")//ok
     public ResponseEntity<String> createAccount(@RequestBody CustomerAccountCreationDto customerAccountCreationDto) {
         return ResponseEntity.ok(openEndPointsService.createCustomerAccount(customerAccountCreationDto));
     }
-    //ok
-    @GetMapping("/login")
+
+    @GetMapping("/login")  //ok
     public ResponseEntity<TokenAndRoleDto> login(Authentication authentication) throws EmptyAuthenticationException {
         return ResponseEntity.ok(openEndPointsService.generateToken(authentication));
     }
 
     @GetMapping("/getVehicleList")
-    public ResponseEntity<List<VehicleForCustomersDto>> getVehicleList() {
-        List<VehicleForCustomersDto> cars = new ArrayList<>();
-        return new ResponseEntity<>(cars, HttpStatus.OK);
+    public ResponseEntity<List<VehicleForCustomersDto>> getVehicleList() throws VehicleListIsEmptyException {
+        return ResponseEntity.ok(openEndPointsService.getVehicleListForClients());
     }
 
-    //works
-    @GetMapping("/hello")//for testing purposes
+    @GetMapping("/hello")//for testing purposes   //ok
     public ResponseEntity<String> getTestMessage() {
         return ResponseEntity.ok("hello from open endpoint");
     }
 
-    //works
+
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    @GetMapping("/helloAuthorized")//for testing purposes
+    @GetMapping("/helloAuthorized")//for testing purposes    //works
     public ResponseEntity<String> getTestMessageAuthorized() {
         return ResponseEntity.ok("hello from closed endpoint");
     }

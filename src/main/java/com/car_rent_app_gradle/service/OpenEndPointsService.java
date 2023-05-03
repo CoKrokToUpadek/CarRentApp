@@ -10,6 +10,7 @@ import com.car_rent_app_gradle.domain.entity.CustomerEntity;
 import com.car_rent_app_gradle.errorhandlers.ApplicationDataBaseException;
 import com.car_rent_app_gradle.errorhandlers.EmptyAuthenticationException;
 import com.car_rent_app_gradle.errorhandlers.AppUserCreationException;
+import com.car_rent_app_gradle.errorhandlers.VehicleListIsEmptyException;
 import com.car_rent_app_gradle.mapper.AppUserDetailsMapper;
 import com.car_rent_app_gradle.mapper.CustomerMapper;
 import com.car_rent_app_gradle.mapper.VehicleMapper;
@@ -119,8 +120,15 @@ public class OpenEndPointsService {
 
 
     //checks if vehicle is still available for rents
-    public List<VehicleForCustomersDto> getVehicleListForClients() {
-        return vehicleMapper.mapToDtoForCustomerList(vehicleRepository.findAllByVehicleNoLongerAvailable(false));
+    public List<VehicleForCustomersDto> getVehicleListForClients() throws VehicleListIsEmptyException {
+        List<VehicleForCustomersDto> dtoList=vehicleMapper.mapToDtoForCustomerList(vehicleRepository.findAllByVehicleNoLongerAvailable(false));
+        if (dtoList.isEmpty()){
+            throw new VehicleListIsEmptyException();
+        }else {
+            return dtoList;
+        }
+
+
     }
 
 }

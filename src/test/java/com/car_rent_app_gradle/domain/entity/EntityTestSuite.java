@@ -54,7 +54,8 @@ public class EntityTestSuite {
         employee.setCarAppUserDetails(details);
         //when
         VehicleEntity vehicle=new VehicleEntity("tempStatus",true,"testBrand","testModel","testType","testCondition",
-                100.00,"testPlateNumber",100,employee);
+                100.00,"testPlateNumber",100);
+        vehicle.setEmployeeThatRegisteredVehicle(employee);
         //then
         Assertions.assertEquals(vehicle.getEmployeeThatRegisteredVehicle(),employee);
     }
@@ -73,7 +74,8 @@ public class EntityTestSuite {
                 "TestHouseNo","TestContacts");
         customer.setCarAppUserDetails(details);
         VehicleEntity vehicle=new VehicleEntity("tempStatus",true,"testBrand","testModel","testType","testCondition",
-                100.00,"testPlateNumber",100,employee);
+                100.00,"testPlateNumber",100);
+        vehicle.setEmployeeThatRegisteredVehicle(employee);
         //when
         ReservationEntity reservation=new ReservationEntity(LocalDate.of(2000,2,2),"testPickupLocation",
                 5,LocalDate.of(2000,2,2),LocalDate.of(2000,2,7),customer,employee,new RentEntity(),vehicle);

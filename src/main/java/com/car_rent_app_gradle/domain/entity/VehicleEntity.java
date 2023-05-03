@@ -61,7 +61,6 @@ public class VehicleEntity {
     private List<RentEntity> rentsInvolvedInVehicle;
 
     //registered employee
-    @NonNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vehicle_employee_registering", referencedColumnName = "employee_id",nullable = false)
     private EmployeeEntity EmployeeThatRegisteredVehicle;

@@ -2,9 +2,18 @@ package com.car_rent_app_gradle.service;
 
 import com.car_rent_app_gradle.domain.dto.CustomerAccountCreationDto;
 import com.car_rent_app_gradle.domain.dto.TokenAndRoleDto;
+import com.car_rent_app_gradle.domain.dto.VehicleForCustomersDto;
+import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
+import com.car_rent_app_gradle.domain.entity.CustomerEntity;
+import com.car_rent_app_gradle.domain.entity.EmployeeEntity;
+import com.car_rent_app_gradle.domain.entity.VehicleEntity;
 import com.car_rent_app_gradle.errorhandlers.AppUserCreationException;
 import com.car_rent_app_gradle.errorhandlers.EmptyAuthenticationException;
+import com.car_rent_app_gradle.errorhandlers.VehicleListIsEmptyException;
+import com.car_rent_app_gradle.mapper.VehicleMapper;
 import com.car_rent_app_gradle.repository.AppUserDetailsRepository;
+import com.car_rent_app_gradle.repository.EmployeeRepository;
+import com.car_rent_app_gradle.repository.VehicleRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +24,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.TestPropertySource;
 
 
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 @SpringBootTest
@@ -26,6 +37,15 @@ public class OpenEndPointServiceTestSuite {
     OpenEndPointsService openEndPointsService;
     @Autowired
     AppUserDetailsRepository repository;
+    @Autowired
+    EmployeeRepository employeeRepository;
+    @Autowired
+    VehicleRepository vehicleRepository;
+    @Autowired
+    AppUserDetailsRepository appUserDetailsRepository;
+    @Autowired
+    VehicleMapper vehicleMapper;
+
 
     @Test
     void generateTokenTest() throws EmptyAuthenticationException {
@@ -51,13 +71,6 @@ public class OpenEndPointServiceTestSuite {
         output= openEndPointsService.createCustomerAccount(dto);
         //then
         Assertions.assertEquals("user was created successfully",output);
-
-
-//        //when
-//        dto.setCustomerCity("");
-//        output= openEndPointsService.createCustomerAccount(dto);
-//        //then missing information
-//        Assertions.assertEquals(AppUserCreationException.ERR_MISSING_INFORMATION,output);
     }
 
 
@@ -123,4 +136,46 @@ public class OpenEndPointServiceTestSuite {
         //then
         Assertions.assertEquals(AppUserCreationException.ERR_WRONG_EMAIL_FORMAT,output);
     }
+
+    @Test
+    void getVehicleEmptyListTest(){
+        //given
+        //when
+        Exception exception=   Assertions.assertThrows(VehicleListIsEmptyException.class,()-> {
+            openEndPointsService.getVehicleListForClients();
+        });
+        String msg=exception.getMessage();
+        //then
+        Assertions.assertEquals("No vehicles available",msg);
+
+    }
+
+    @Test
+    void getVehicleListWithValuesTest() throws VehicleListIsEmptyException {
+        //given
+        AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword","testEmail",
+                "testRole",true,true,
+                true,true);
+        EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
+                "testHouseNo","testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00);
+        employee.setCarAppUserDetails(details);
+        CustomerEntity customer=new CustomerEntity("testFirstName","testLastName",
+                "TestCode","TestCountry","testCity",
+                "TestHouseNo","TestContacts");
+        customer.setCarAppUserDetails(details);
+        VehicleEntity vehicle=new VehicleEntity("tempStatus",false,"testBrand","testModel","testType","testCondition",
+                100.00,"testPlateNumber",100);
+        vehicle.setEmployeeThatRegisteredVehicle(employee);
+        employeeRepository.save(employee);
+        vehicleRepository.save(vehicle);
+        vehicle=  vehicleRepository.findByVehiclePlateNumber("testPlateNumber").get();
+        //when
+        List<VehicleForCustomersDto> vehicleForCustomersDtoList= openEndPointsService.getVehicleListForClients();
+
+        //then
+        Assertions.assertEquals(1,vehicleForCustomersDtoList.size());
+        Assertions.assertTrue(vehicleForCustomersDtoList.contains(vehicleMapper.mapToDtoForCustomers(vehicle)));
+
+    }
+
 }
