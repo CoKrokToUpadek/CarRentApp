@@ -1,8 +1,10 @@
 package com.car_rent_app_gradle.controller;
 
+import com.car_rent_app_gradle.domain.dto.EmployeeAccountCreationDto;
 import com.car_rent_app_gradle.domain.dto.ReservationDto;
 import com.car_rent_app_gradle.domain.dto.VehicleForCustomersDto;
 import com.car_rent_app_gradle.domain.dto.EmployeeDto;
+import com.car_rent_app_gradle.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ import java.util.List;
 @RequestMapping("/employee")
 @AllArgsConstructor
 public class EmployeeController {
+
+    private final EmployeeService employeeService;
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     @PostMapping("/addNewVehicle")
     public ResponseEntity<String> addNewVehicle(@CurrentSecurityContext SecurityContext context, @RequestBody VehicleForCustomersDto carDto){
@@ -46,10 +50,10 @@ public class EmployeeController {
         List<ReservationDto> reservationDtoList=new ArrayList<>();
         return new ResponseEntity(reservationDtoList,HttpStatus.OK);
     }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")/*TODO work in progress on employee endpoint*/
     @PostMapping("/addEmployee")
-    public ResponseEntity<String> addEmployee(@RequestBody EmployeeDto employeeDto){
-        return ResponseEntity.ok("ok mk");
+    public ResponseEntity<String> addEmployee(@RequestBody EmployeeAccountCreationDto employeeAccountCreationDto){
+        return ResponseEntity.ok(employeeService.addEmployee(employeeAccountCreationDto));
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/editEmployee")

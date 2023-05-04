@@ -7,7 +7,7 @@ import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
 import com.car_rent_app_gradle.domain.entity.CustomerEntity;
 import com.car_rent_app_gradle.domain.entity.EmployeeEntity;
 import com.car_rent_app_gradle.domain.entity.VehicleEntity;
-import com.car_rent_app_gradle.errorhandlers.AppUserCreationException;
+import com.car_rent_app_gradle.errorhandlers.AppUserCreationValidationAndExceptions;
 import com.car_rent_app_gradle.errorhandlers.EmptyAuthenticationException;
 import com.car_rent_app_gradle.errorhandlers.VehicleListIsEmptyException;
 import com.car_rent_app_gradle.mapper.VehicleMapper;
@@ -63,78 +63,107 @@ public class OpenEndPointServiceTestSuite {
     void createCustomerAccountSuccessTest(){
         //given
         String output;
-        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
-                "testDrivingLicence","testCountry","testCity","testHouseNo",
-                "testContact","testUserLogin123","testUserPassword_123","testUser@Email123");
-
+        CustomerAccountCreationDto dto=CustomerAccountCreationDto.builder()
+                .firstName("testName").lastName("testLastName").drivingLicense( "testDrivingLicence")
+                .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
+                .systemUserLogin("testUserLogin1234").systemUserPassword("testUserPassword_123")
+                .systemUserEmail("testUser@Email1234").build();
+//        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
+//                "testDrivingLicence","testCountry","testCity","testHouseNo",
+//                "testContact","testUserLogin123","testUserPassword_123","testUser@Email123");
         //when
         output= openEndPointsService.createCustomerAccount(dto);
         //then
-        Assertions.assertEquals("user was created successfully",output);
+        Assertions.assertEquals("customer was created successfully",output);
     }
 
 
     @Test
     void createCustomerAccountLoginTakenTest() {
         String output;
-        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
-                "testDrivingLicence","testCountry","testCity","testHouseNo",
-                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
+        CustomerAccountCreationDto dto=CustomerAccountCreationDto.builder()
+                .firstName("testName").lastName("testLastName").drivingLicense( "testDrivingLicence")
+                .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
+                .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
+                .systemUserEmail("testUser@Email123").build();
+//        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
+//                "testDrivingLicence","testCountry","testCity","testHouseNo",
+//                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
         //when
         openEndPointsService.createCustomerAccount(dto);
         output= openEndPointsService.createCustomerAccount(dto);
         //then
-        Assertions.assertEquals(AppUserCreationException.ERR_LOGIN_TAKEN,output);
+        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_LOGIN_TAKEN,output);
     }
 
     @Test
     void createCustomerAccountEmailTakenTest() {
         String output;
-        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
-                "testDrivingLicence","testCountry","testCity","testHouseNo",
-                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
+        CustomerAccountCreationDto dto=CustomerAccountCreationDto.builder()
+                .firstName("testName").lastName("testLastName").drivingLicense( "testDrivingLicence")
+                .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
+                .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
+                .systemUserEmail("testUser@Email123").build();
+//        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
+//                "testDrivingLicence","testCountry","testCity","testHouseNo",
+//                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
         //when
         openEndPointsService.createCustomerAccount(dto);
         dto.setSystemUserLogin("newTestLogin");
         output= openEndPointsService.createCustomerAccount(dto);
         //then
-        Assertions.assertEquals(AppUserCreationException.ERR_EMAIL_TAKEN,output);
+        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_EMAIL_TAKEN,output);
     }
 
     @Test
     void createCustomerAccountWrongPasswordFormatTest() {
         String output;
-        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
-                "testDrivingLicence","testCountry","testCity","testHouseNo",
-                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
+        CustomerAccountCreationDto dto=CustomerAccountCreationDto.builder()
+                .firstName("testName").lastName("testLastName").drivingLicense( "testDrivingLicence")
+                .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
+                .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
+                .systemUserEmail("testUser@Email123").build();
+//        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
+//                "testDrivingLicence","testCountry","testCity","testHouseNo",
+//                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
         dto.setSystemUserPassword("123");
         output= openEndPointsService.createCustomerAccount(dto);
         //then
-        Assertions.assertEquals(AppUserCreationException.ERR_WRONG_PASSWORD,output);
+        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_WRONG_PASSWORD,output);
     }
 
     @Test
     void createCustomerAccountWrongLoginFormatTest() {
         String output;
-        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
-                "testDrivingLicence","testCountry","testCity","testHouseNo",
-                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
+        CustomerAccountCreationDto dto=CustomerAccountCreationDto.builder()
+                .firstName("testName").lastName("testLastName").drivingLicense( "testDrivingLicence")
+                .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
+                .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
+                .systemUserEmail("testUser@Email123").build();
+//        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
+//                "testDrivingLicence","testCountry","testCity","testHouseNo",
+//                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
         dto.setSystemUserLogin("123");
         output= openEndPointsService.createCustomerAccount(dto);
         //then
-        Assertions.assertEquals(AppUserCreationException.ERR_WRONG_LOGIN,output);
+        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_WRONG_LOGIN,output);
     }
 
     @Test
     void createCustomerAccountWrongEmailFormatTest() {
         String output;
-        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
-                "testDrivingLicence","testCountry","testCity","testHouseNo",
-                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
+        CustomerAccountCreationDto dto=CustomerAccountCreationDto.builder()
+                .firstName("testName").lastName("testLastName").drivingLicense( "testDrivingLicence")
+                .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
+                .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
+                .systemUserEmail("testUser@Email123").build();
+//        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
+//                "testDrivingLicence","testCountry","testCity","testHouseNo",
+//                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
         dto.setSystemUserEmail("123");
         output= openEndPointsService.createCustomerAccount(dto);
         //then
-        Assertions.assertEquals(AppUserCreationException.ERR_WRONG_EMAIL_FORMAT,output);
+        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_WRONG_EMAIL_FORMAT,output);
     }
 
     @Test

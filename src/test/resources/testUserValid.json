@@ -1,11 +1,11 @@
 {
-  "customerFirstName": "test" ,
-  "customerLastName": "test" ,
-  "customerDrivingLicense": "test" ,
-  "customerCountry": "test" ,
-  "customerCity": "test" ,
-  "customerStreetAndHouseNo": "test" ,
-  "customerContact": "test" ,
+  "firstName": "test" ,
+  "lastName": "test" ,
+  "drivingLicense": "test" ,
+  "country": "test" ,
+  "city": "test" ,
+  "streetAndHouseNo": "test" ,
+  "contact": "test" ,
   "systemUserLogin": "testlogin" ,
   "systemUserPassword": "testPassword_123" ,
   "systemUserEmail": "test@email"

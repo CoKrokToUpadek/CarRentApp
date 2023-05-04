@@ -1,9 +1,12 @@
 package com.car_rent_app_gradle.mapper;
 
 import com.car_rent_app_gradle.domain.dto.CustomerAccountCreationDto;
+import com.car_rent_app_gradle.domain.dto.EmployeeAccountCreationDto;
 import com.car_rent_app_gradle.domain.dto.EmployeeDto;
 import com.car_rent_app_gradle.domain.entity.EmployeeEntity;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 @Service
 public class EmployeeMapper {
@@ -22,4 +25,11 @@ public class EmployeeMapper {
                 employeeEntity.getEmployeeResponsibilities(),employeeEntity.getEmployeeJoinedDate(), employeeEntity.getEmployeeSalary());
     }
 
+
+    public EmployeeEntity mapToNewEmployeeEntity(EmployeeAccountCreationDto employeeAccountCreationDto){
+        return new EmployeeEntity(employeeAccountCreationDto.getSecurityNumber(), employeeAccountCreationDto.getFirstName(),
+                employeeAccountCreationDto.getLastName(), employeeAccountCreationDto.getCountry(), employeeAccountCreationDto.getContact(),
+                employeeAccountCreationDto.getStreetAndHouseNo(), employeeAccountCreationDto.getContact(), employeeAccountCreationDto.getJoinedDate(),
+                employeeAccountCreationDto.getEmployeeSalary());
+    }
 }

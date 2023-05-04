@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 public class CustomerMapper {
 
     public CustomerEntity mapToNewCustomerEntity(CustomerAccountCreationDto customerAccountCreationDto) {
-        return new CustomerEntity(customerAccountCreationDto.getCustomerFirstName(), customerAccountCreationDto.getCustomerLastName(),
-                customerAccountCreationDto.getCustomerDrivingLicense(), customerAccountCreationDto.getCustomerCountry(), customerAccountCreationDto.getCustomerCity(),
-                customerAccountCreationDto.getCustomerStreetAndHouseNo(), customerAccountCreationDto.getCustomerContact());
+//        return new CustomerEntity(customerAccountCreationDto.getCustomerFirstName(), customerAccountCreationDto.getCustomerLastName(),
+//                customerAccountCreationDto.getCustomerDrivingLicense(), customerAccountCreationDto.getCustomerCountry(), customerAccountCreationDto.getCustomerCity(),
+//                customerAccountCreationDto.getCustomerStreetAndHouseNo(), customerAccountCreationDto.getCustomerContact());
+                return new CustomerEntity(customerAccountCreationDto.getFirstName(), customerAccountCreationDto.getLastName(),
+                customerAccountCreationDto.getDrivingLicense(), customerAccountCreationDto.getCountry(), customerAccountCreationDto.getCity(),
+                customerAccountCreationDto.getStreetAndHouseNo(), customerAccountCreationDto.getContact());
     }
 }

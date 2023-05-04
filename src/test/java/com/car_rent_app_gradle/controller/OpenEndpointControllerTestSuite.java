@@ -14,6 +14,7 @@ import com.car_rent_app_gradle.repository.AppUserDetailsRepository;
 import com.car_rent_app_gradle.repository.CustomerRepository;
 import com.car_rent_app_gradle.repository.EmployeeRepository;
 import com.car_rent_app_gradle.repository.VehicleRepository;
+import com.car_rent_app_gradle.service.CommonDataUserService;
 import com.car_rent_app_gradle.service.OpenEndPointsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -46,7 +47,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 @WebMvcTest(OpenEndPointsController.class)
 @Import({OpenEndPointsService.class, VehicleMapper.class,TokenService.class,JWTConfig.class
 , AppUserSpringSecurityDetailsService.class, AppUserDetailsService.class, CustomerMapper.class
-, AppUserDetailsMapper.class})
+, AppUserDetailsMapper.class, CommonDataUserService.class})
 @TestPropertySource("classpath:application-H2TestDb.properties")
 public class OpenEndpointControllerTestSuite {
 
@@ -144,14 +145,14 @@ public class OpenEndpointControllerTestSuite {
         MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/createCustomerAccount")
                         .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
-        Assertions.assertEquals("user was created successfully", result.getResponse().getContentAsString());
+        Assertions.assertEquals("customer was created successfully", result.getResponse().getContentAsString());
     }
 
 
     @Test
     void getVehicleListValidTest() throws Exception {
 
-        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.get("/getVehicleList")
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.get("/getVehicleListForClients")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         Assertions.assertEquals("No vehicles available", result.getResponse().getContentAsString());
@@ -165,7 +166,7 @@ public class OpenEndpointControllerTestSuite {
         vehicle.setEmployeeThatRegisteredVehicle(new EmployeeEntity());
         when(vehicleRepository.findAllByVehicleNoLongerAvailable(false)).thenReturn(List.of(vehicle));
 
-        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.get("/getVehicleList")
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.get("/getVehicleListForClients")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         Assertions.assertEquals("[{\"id\":null,\"vehicleStatus\":\"tempStatus\",\"vehicleBrand\":\"testBrand\"," +

@@ -17,24 +17,26 @@ import java.util.List;
 @RequestMapping("/customer")
 @AllArgsConstructor
 public class CustomerController {
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE','ROLE_CUSTOMER')")
+
+
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
     @PostMapping("/rentNewVehicle")
     public ResponseEntity<String> rentNewVehicle(@CurrentSecurityContext SecurityContext context,@RequestParam Long carId){
         return ResponseEntity.ok("ok mk");
     }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE','ROLE_CUSTOMER')")
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
     @PutMapping("/changePersonalInformation")
     public ResponseEntity<String> changePersonalInformation(@CurrentSecurityContext SecurityContext context){//need security context
         return ResponseEntity.ok("ok mk");
     }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE','ROLE_CUSTOMER')")
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
     @PutMapping("/cancelVehicleReservation")
     public ResponseEntity<String> cancelVehicleReservation(@CurrentSecurityContext SecurityContext context,@RequestParam Long carId){//need security context
         return ResponseEntity.ok("ok mk");
     }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE','ROLE_CUSTOMER')")
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
     @DeleteMapping("/getAllMyReservations")
-    public ResponseEntity<List<ReservationDto>> getVehicleReservationList(@CurrentSecurityContext SecurityContext context,@RequestParam Long carId){//need security context
+    public ResponseEntity<List<ReservationDto>> getVehicleReservationList(@CurrentSecurityContext SecurityContext context){//need security context
         List<ReservationDto> reservationsList=new ArrayList<>();
         return new ResponseEntity(reservationsList, HttpStatus.OK);
     }

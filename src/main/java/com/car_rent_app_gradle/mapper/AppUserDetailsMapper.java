@@ -3,6 +3,7 @@ package com.car_rent_app_gradle.mapper;
 import com.car_rent_app_gradle.client.enums.RolesList;
 import com.car_rent_app_gradle.domain.dto.AppUserDetailsDto;
 import com.car_rent_app_gradle.domain.dto.CustomerAccountCreationDto;
+import com.car_rent_app_gradle.domain.dto.EmployeeAccountCreationDto;
 import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,12 @@ public class AppUserDetailsMapper {
     public AppUserDetailsEntity mapToNewCustomerEntity(CustomerAccountCreationDto customerAccountCreationDto){
         return new AppUserDetailsEntity(customerAccountCreationDto.getSystemUserLogin(),
                 customerAccountCreationDto.getSystemUserPassword(), customerAccountCreationDto.getSystemUserEmail(),
-                RolesList.ROLE_USER.toString(),true,true,true,true);
+                RolesList.ROLE_CUSTOMER.toString(),true,true,true,true);
+    }
+
+    public AppUserDetailsEntity mapToNewEmployeeEntity(EmployeeAccountCreationDto employeeAccountCreationDto) {
+        return new AppUserDetailsEntity(employeeAccountCreationDto.getSystemUserLogin(),
+                employeeAccountCreationDto.getSystemUserPassword(), employeeAccountCreationDto.getSystemUserEmail(),
+                RolesList.ROLE_EMPLOYEE.toString(),true,true,true,true);
     }
 }
