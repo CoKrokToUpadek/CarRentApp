@@ -34,23 +34,30 @@ public class EmployeeService {
 
     AppUserDetailsMapper appUserDetailsMapper;
 
+
     public EmployeeService(VehicleRepository vehicleRepository, EmployeeRepository employeeRepository,
-                           EmployeeMapper employeeMapper, VehicleMapper vehicleMapper) {
+                           EmployeeMapper employeeMapper, VehicleMapper vehicleMapper,
+                           AppUserDetailsRepository appUserDetailsRepository, PasswordEncoder encoder,
+                           CommonDataUserService commonDataUserService, AppUserDetailsMapper appUserDetailsMapper) {
         this.vehicleRepository = vehicleRepository;
         this.employeeRepository = employeeRepository;
         this.employeeMapper = employeeMapper;
         this.vehicleMapper = vehicleMapper;
+        this.appUserDetailsRepository = appUserDetailsRepository;
+        this.encoder = encoder;
+        this.commonDataUserService = commonDataUserService;
+        this.appUserDetailsMapper = appUserDetailsMapper;
     }
 
     public String addEmployee(EmployeeAccountCreationDto employeeAccountCreationDto){
         EmployeeEntity employeeEntity;
         AppUserDetailsEntity appUserDetailsEntity;
 
-        String dtoVerification=commonDataUserService.validateUserCreationDto(employeeAccountCreationDto, RolesList.ROLE_CUSTOMER);
+        String dtoVerification=commonDataUserService.validateUserCreationDto(employeeAccountCreationDto, RolesList.ROLE_EMPLOYEE);
         if(!dtoVerification.equals(AppUserCreationValidationAndExceptions.VALIDATION_PASS)){
             return dtoVerification;
         }
-        employeeAccountCreationDto.setSystemUserEmail(encoder.encode(employeeAccountCreationDto.getSystemUserPassword()));
+        employeeAccountCreationDto.setSystemUserPassword(encoder.encode(employeeAccountCreationDto.getSystemUserPassword()));
         appUserDetailsEntity = appUserDetailsMapper.mapToNewEmployeeEntity(employeeAccountCreationDto);
         appUserDetailsRepository.save(appUserDetailsEntity);
    /*      TODO since error below signalize that something went really bad during account creation, it needs some sort
@@ -58,9 +65,9 @@ public class EmployeeService {
         appUserDetailsEntity = appUserDetailsRepository.findBySystemUserLoginAndSystemUserEmail(employeeAccountCreationDto.getSystemUserLogin()
                 ,employeeAccountCreationDto.getSystemUserEmail()).orElseThrow(ApplicationDataBaseException::new);
         employeeEntity = employeeMapper.mapToNewEmployeeEntity(employeeAccountCreationDto);
-        employeeEntity.setCarAppUserDetails(appUserDetailsEntity);
+        employeeEntity.setAppUserDetails(appUserDetailsEntity);
         employeeRepository.save(employeeEntity);
-        return "Employee was created successfully";
+        return "Employee was created successfully.";
     }
 
     public String addVehicle(VehicleForEmployeesDto vehicle, Long employeeId){

@@ -50,7 +50,7 @@ public class EmployeeController {
         List<ReservationDto> reservationDtoList=new ArrayList<>();
         return new ResponseEntity(reservationDtoList,HttpStatus.OK);
     }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")/*TODO work in progress on employee endpoint*/
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/addEmployee")
     public ResponseEntity<String> addEmployee(@RequestBody EmployeeAccountCreationDto employeeAccountCreationDto){
         return ResponseEntity.ok(employeeService.addEmployee(employeeAccountCreationDto));

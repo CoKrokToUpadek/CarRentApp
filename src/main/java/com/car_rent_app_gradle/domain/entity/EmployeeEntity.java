@@ -61,6 +61,6 @@ public class EmployeeEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_details_id", referencedColumnName = "system_user_id",nullable = false)
-    private AppUserDetailsEntity carAppUserDetails;
+    private AppUserDetailsEntity appUserDetails;
 
 }

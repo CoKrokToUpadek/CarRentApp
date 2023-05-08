@@ -12,8 +12,10 @@ import com.car_rent_app_gradle.errorhandlers.EmptyAuthenticationException;
 import com.car_rent_app_gradle.errorhandlers.VehicleListIsEmptyException;
 import com.car_rent_app_gradle.mapper.VehicleMapper;
 import com.car_rent_app_gradle.repository.AppUserDetailsRepository;
+import com.car_rent_app_gradle.repository.CustomerRepository;
 import com.car_rent_app_gradle.repository.EmployeeRepository;
 import com.car_rent_app_gradle.repository.VehicleRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +38,6 @@ public class OpenEndPointServiceTestSuite {
     @Autowired
     OpenEndPointsService openEndPointsService;
     @Autowired
-    AppUserDetailsRepository repository;
-    @Autowired
     EmployeeRepository employeeRepository;
     @Autowired
     VehicleRepository vehicleRepository;
@@ -45,7 +45,21 @@ public class OpenEndPointServiceTestSuite {
     AppUserDetailsRepository appUserDetailsRepository;
     @Autowired
     VehicleMapper vehicleMapper;
+    @Autowired
+    CustomerRepository customerRepository;
 
+
+    @AfterEach
+    public void garbageCollector(){
+//        there was some sort of garbage in memory that generated errors when running tests in bulk,
+//        (db should not hold context past single tests, or at least I think it shouldn't with my config)
+        vehicleRepository.deleteAll();
+        customerRepository.deleteAll();
+        employeeRepository.deleteAll();
+        appUserDetailsRepository.deleteAll();
+
+
+    }
 
     @Test
     void generateTokenTest() throws EmptyAuthenticationException {
@@ -59,22 +73,20 @@ public class OpenEndPointServiceTestSuite {
         Assertions.assertFalse(dto.getToken().isEmpty());
     }
 
+
     @Test
     void createCustomerAccountSuccessTest(){
         //given
         String output;
-        CustomerAccountCreationDto dto=CustomerAccountCreationDto.builder()
+        CustomerAccountCreationDto dto2=CustomerAccountCreationDto.builder()
                 .firstName("testName").lastName("testLastName").drivingLicense( "testDrivingLicence")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
-                .systemUserLogin("testUserLogin1234").systemUserPassword("testUserPassword_123")
-                .systemUserEmail("testUser@Email1234").build();
-//        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
-//                "testDrivingLicence","testCountry","testCity","testHouseNo",
-//                "testContact","testUserLogin123","testUserPassword_123","testUser@Email123");
+                .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
+                .systemUserEmail("testUser@Email123").build();
         //when
-        output= openEndPointsService.createCustomerAccount(dto);
+        output= openEndPointsService.createCustomerAccount(dto2);
         //then
-        Assertions.assertEquals("customer was created successfully",output);
+        Assertions.assertEquals("Customer was created successfully.",output);
     }
 
 
@@ -86,11 +98,8 @@ public class OpenEndPointServiceTestSuite {
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
                 .systemUserEmail("testUser@Email123").build();
-//        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
-//                "testDrivingLicence","testCountry","testCity","testHouseNo",
-//                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
-        //when
         openEndPointsService.createCustomerAccount(dto);
+        //when
         output= openEndPointsService.createCustomerAccount(dto);
         //then
         Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_LOGIN_TAKEN,output);
@@ -104,9 +113,6 @@ public class OpenEndPointServiceTestSuite {
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
                 .systemUserEmail("testUser@Email123").build();
-//        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
-//                "testDrivingLicence","testCountry","testCity","testHouseNo",
-//                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
         //when
         openEndPointsService.createCustomerAccount(dto);
         dto.setSystemUserLogin("newTestLogin");
@@ -123,9 +129,6 @@ public class OpenEndPointServiceTestSuite {
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
                 .systemUserEmail("testUser@Email123").build();
-//        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
-//                "testDrivingLicence","testCountry","testCity","testHouseNo",
-//                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
         dto.setSystemUserPassword("123");
         output= openEndPointsService.createCustomerAccount(dto);
         //then
@@ -140,9 +143,6 @@ public class OpenEndPointServiceTestSuite {
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
                 .systemUserEmail("testUser@Email123").build();
-//        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
-//                "testDrivingLicence","testCountry","testCity","testHouseNo",
-//                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
         dto.setSystemUserLogin("123");
         output= openEndPointsService.createCustomerAccount(dto);
         //then
@@ -157,9 +157,6 @@ public class OpenEndPointServiceTestSuite {
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
                 .systemUserEmail("testUser@Email123").build();
-//        CustomerAccountCreationDto dto=new CustomerAccountCreationDto("testName","testLastName",
-//                "testDrivingLicence","testCountry","testCity","testHouseNo",
-//                "testContact","testUserLogin","testUserPassword_123","testUser@Email");
         dto.setSystemUserEmail("123");
         output= openEndPointsService.createCustomerAccount(dto);
         //then
@@ -182,17 +179,19 @@ public class OpenEndPointServiceTestSuite {
     @Test
     void getVehicleListWithValuesTest() throws VehicleListIsEmptyException {
         //given
-        AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword","testEmail",
-                "testRole",true,true,
+        AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword",
+                "testEmail", "testRole",true,true,
                 true,true);
-        EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
-                "testHouseNo","testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00);
-        employee.setCarAppUserDetails(details);
+        EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName",
+                "testCountry","testCity", "testHouseNo",
+                "testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00);
+        employee.setAppUserDetails(details);
         CustomerEntity customer=new CustomerEntity("testFirstName","testLastName",
                 "TestCode","TestCountry","testCity",
                 "TestHouseNo","TestContacts");
-        customer.setCarAppUserDetails(details);
-        VehicleEntity vehicle=new VehicleEntity("tempStatus",false,"testBrand","testModel","testType","testCondition",
+        customer.setAppUserDetails(details);
+        VehicleEntity vehicle=new VehicleEntity("tempStatus",false,"testBrand",
+                "testModel","testType","testCondition",
                 100.00,"testPlateNumber",100);
         vehicle.setEmployeeThatRegisteredVehicle(employee);
         employeeRepository.save(employee);

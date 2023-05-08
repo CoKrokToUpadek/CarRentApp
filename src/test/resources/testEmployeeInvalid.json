@@ -1,0 +1,17 @@
+{
+  "firstName": "test" ,
+  "lastName": "test" ,
+  "drivingLicense": "test" ,
+  "country": "test" ,
+  "city": "test" ,
+  "streetAndHouseNo": "test" ,
+
+  "systemUserLogin": "testLogin" ,
+  "systemUserPassword": "testPassword_123" ,
+  "systemUserEmail": "test@email",
+  "securityNumber": "testSecurityNumber",
+  "responsibilities": "testResponsibilities",
+  "joinedDate":"2022-05-10",
+  "employeeSalary": 200.00,
+  "systemUserRole": "ROLE_EMPLOYEE"
+}

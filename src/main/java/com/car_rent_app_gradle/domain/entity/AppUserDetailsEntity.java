@@ -40,10 +40,10 @@ public class AppUserDetailsEntity {
     @Column(name = "system_user_account_enabled",columnDefinition = "BOOLEAN",nullable = false)
     private Boolean systemUserAccountEnabled;
 
-    @OneToOne(mappedBy = "carAppUserDetails")
+    @OneToOne(mappedBy = "appUserDetails")
     private EmployeeEntity systemUserEmployeeId;
 
-    @OneToOne(mappedBy = "carAppUserDetails")
+    @OneToOne(mappedBy = "appUserDetails")
     private CustomerEntity systemUserCustomerId;
 
 }

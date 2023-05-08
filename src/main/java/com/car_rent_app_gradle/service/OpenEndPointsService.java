@@ -82,9 +82,9 @@ public class OpenEndPointsService {
         appUserDetailsEntity = appUserDetailsRepository.findBySystemUserLoginAndSystemUserEmail(customerAccountCreationDto.getSystemUserLogin()
         ,customerAccountCreationDto.getSystemUserEmail()).orElseThrow(ApplicationDataBaseException::new);
         customerEntity = customerMapper.mapToNewCustomerEntity(customerAccountCreationDto);
-        customerEntity.setCarAppUserDetails(appUserDetailsEntity);
+        customerEntity.setAppUserDetails(appUserDetailsEntity);
         customerRepository.save(customerEntity);
-        return "customer was created successfully";
+        return "Customer was created successfully.";
     }
 
 

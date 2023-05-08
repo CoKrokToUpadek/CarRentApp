@@ -24,9 +24,9 @@ public class EntityTestSuite {
        CustomerEntity customer=new CustomerEntity("testFirstName","testLastName",
                "TestCode","TestCountry","testCity",
                "TestHouseNo","TestContacts");
-       customer.setCarAppUserDetails(details);
+       customer.setAppUserDetails(details);
        //then
-        Assertions.assertEquals(customer.getCarAppUserDetails(),details);
+        Assertions.assertEquals(customer.getAppUserDetails(),details);
     }
 
     @Test
@@ -38,9 +38,9 @@ public class EntityTestSuite {
         //when
         EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
                 "testHouseNo","testContact", LocalDate.of(2000, Calendar.MARCH,2),100.00);
-        employee.setCarAppUserDetails(details);
+        employee.setAppUserDetails(details);
         //then
-        Assertions.assertEquals(employee.getCarAppUserDetails(),details);
+        Assertions.assertEquals(employee.getAppUserDetails(),details);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class EntityTestSuite {
                 true,true);
         EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
                 "testHouseNo","testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00);
-        employee.setCarAppUserDetails(details);
+        employee.setAppUserDetails(details);
         //when
         VehicleEntity vehicle=new VehicleEntity("tempStatus",true,"testBrand","testModel","testType","testCondition",
                 100.00,"testPlateNumber",100);
@@ -68,11 +68,11 @@ public class EntityTestSuite {
                 true,true);
         EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
                 "testHouseNo","testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00);
-        employee.setCarAppUserDetails(details);
+        employee.setAppUserDetails(details);
         CustomerEntity customer=new CustomerEntity("testFirstName","testLastName",
                 "TestCode","TestCountry","testCity",
                 "TestHouseNo","TestContacts");
-        customer.setCarAppUserDetails(details);
+        customer.setAppUserDetails(details);
         VehicleEntity vehicle=new VehicleEntity("tempStatus",true,"testBrand","testModel","testType","testCondition",
                 100.00,"testPlateNumber",100);
         vehicle.setEmployeeThatRegisteredVehicle(employee);

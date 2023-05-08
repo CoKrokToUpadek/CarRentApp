@@ -39,7 +39,7 @@ public class SuperUserCreator implements CommandLineRunner {
 
             appUserDetailsRepository.save(superUserDetailsEntity);
             AppUserDetailsEntity saved= appUserDetailsRepository.findBySystemUserLogin("tempAdmin").get();
-            superUserEmployeeEntity.setCarAppUserDetails(saved);
+            superUserEmployeeEntity.setAppUserDetails(saved);
             employeeRepository.save(superUserEmployeeEntity);
         }
     }

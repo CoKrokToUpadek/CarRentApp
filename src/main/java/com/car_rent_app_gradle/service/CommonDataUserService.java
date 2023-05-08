@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 
+//With a little modifications, this could have been transformed to @Component, but I feel like the code would be "over fragmented"
 @Service
 @Transactional
 public class CommonDataUserService {

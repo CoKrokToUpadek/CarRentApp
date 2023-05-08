@@ -129,8 +129,8 @@ public class OpenEndpointControllerTestSuite {
     }
 
     @Test
-    void createCustomerAccountInvalidTest() throws Exception {
-        File jsonFile = new File("src/test/resources/testUserInvalid.json");
+    void createCustomerAccountMissingInformationTest() throws Exception {
+        File jsonFile = new File("src/test/resources/testCustomerInvalid.json");
         byte[] jsonBytes = Files.readAllBytes(jsonFile.toPath());
         MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/createCustomerAccount")
                         .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
@@ -140,12 +140,12 @@ public class OpenEndpointControllerTestSuite {
 
     @Test
     void createCustomerAccountValidTest() throws Exception {
-        File jsonFile = new File("src/test/resources/testUserValid.json");
+        File jsonFile = new File("src/test/resources/testCustomerValid.json");
         byte[] jsonBytes = Files.readAllBytes(jsonFile.toPath());
         MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/createCustomerAccount")
                         .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
-        Assertions.assertEquals("customer was created successfully", result.getResponse().getContentAsString());
+        Assertions.assertEquals("Customer was created successfully.", result.getResponse().getContentAsString());
     }
 
 

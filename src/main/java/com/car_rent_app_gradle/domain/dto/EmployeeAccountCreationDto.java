@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @SuperBuilder
 @EqualsAndHashCode(callSuper=true)
 @JsonInclude(JsonInclude.Include.ALWAYS)
-public class EmployeeAccountCreationDto extends CustomerAccountCreationDto{
+public class EmployeeAccountCreationDto extends CommonFieldsAccountCreationDto{
     @NonNull
     @JsonProperty("securityNumber")
     private String securityNumber;
