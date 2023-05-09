@@ -35,13 +35,12 @@ public class EmployeeEntity {
     @NonNull
     @Column(name = "employee_street_and_house_no",nullable = false)
     private String employeeStreetAndHouseNo;
-
     /* for mail and phone No*/
     @NonNull
     @Column(name = "employee_contact",nullable = false)
     private String employeeContact;
-
-    @Column(name = "employee_responsibilities",nullable = true)
+    @NonNull
+    @Column(name = "employee_responsibilities")
     private String employeeResponsibilities;
 
     @NonNull

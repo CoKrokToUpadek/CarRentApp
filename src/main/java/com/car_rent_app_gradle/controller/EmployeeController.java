@@ -1,9 +1,6 @@
 package com.car_rent_app_gradle.controller;
 
-import com.car_rent_app_gradle.domain.dto.EmployeeAccountCreationDto;
-import com.car_rent_app_gradle.domain.dto.ReservationDto;
-import com.car_rent_app_gradle.domain.dto.VehicleForCustomersDto;
-import com.car_rent_app_gradle.domain.dto.EmployeeDto;
+import com.car_rent_app_gradle.domain.dto.*;
 import com.car_rent_app_gradle.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -50,7 +48,7 @@ public class EmployeeController {
         List<ReservationDto> reservationDtoList=new ArrayList<>();
         return new ResponseEntity(reservationDtoList,HttpStatus.OK);
     }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")//ok
     @PostMapping("/addEmployee")
     public ResponseEntity<String> addEmployee(@RequestBody EmployeeAccountCreationDto employeeAccountCreationDto){
         return ResponseEntity.ok(employeeService.addEmployee(employeeAccountCreationDto));
@@ -60,11 +58,10 @@ public class EmployeeController {
     public ResponseEntity<String> editEmployee(@RequestParam Long employeeId){
         return ResponseEntity.ok("ok mk");
     }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PutMapping("/getEmployeeList")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")//TODO add tests
+    @GetMapping("/getEmployeeList")
     public ResponseEntity<List<EmployeeDto>> getEmployeeList(){
-        List<EmployeeDto> employeeDtoList=new ArrayList<>();
-        return new  ResponseEntity(employeeDtoList, HttpStatus.OK);
+        return new  ResponseEntity(employeeService.getEmployeeList(), HttpStatus.OK);
     }
 
     //some sort of overwatch that would inform employee that manages transaction that transaction was canceled

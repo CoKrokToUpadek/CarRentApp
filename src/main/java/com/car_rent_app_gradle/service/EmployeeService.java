@@ -1,7 +1,9 @@
 package com.car_rent_app_gradle.service;
 
 import com.car_rent_app_gradle.client.enums.RolesList;
+import com.car_rent_app_gradle.domain.dto.AppUserDetailsDto;
 import com.car_rent_app_gradle.domain.dto.EmployeeAccountCreationDto;
+import com.car_rent_app_gradle.domain.dto.EmployeeDto;
 import com.car_rent_app_gradle.domain.dto.VehicleForEmployeesDto;
 import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
 import com.car_rent_app_gradle.domain.entity.EmployeeEntity;
@@ -17,6 +19,11 @@ import com.car_rent_app_gradle.repository.VehicleRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -68,6 +75,16 @@ public class EmployeeService {
         employeeEntity.setAppUserDetails(appUserDetailsEntity);
         employeeRepository.save(employeeEntity);
         return "Employee was created successfully.";
+    }
+
+    public List<EmployeeDto> getEmployeeList(){
+      List<EmployeeDto> employeeDtoList= employeeRepository.findAll().stream().map(employeeEntity -> {
+          AppUserDetailsDto tempDetails = appUserDetailsMapper.mapToAppUserDetailsDto(employeeEntity.getAppUserDetails());
+          EmployeeDto tempDto = employeeMapper.mapToEmployeeDto(employeeEntity);
+          tempDto.setEmployeeDetails(tempDetails);
+          return tempDto;
+      }).toList();
+    return employeeDtoList;
     }
 
     public String addVehicle(VehicleForEmployeesDto vehicle, Long employeeId){

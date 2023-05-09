@@ -37,7 +37,7 @@ public class EntityTestSuite {
                 true,true);
         //when
         EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
-                "testHouseNo","testContact", LocalDate.of(2000, Calendar.MARCH,2),100.00);
+                "testHouseNo","testContact","tempResponsibilities", LocalDate.of(2000, Calendar.MARCH,2),100.00);
         employee.setAppUserDetails(details);
         //then
         Assertions.assertEquals(employee.getAppUserDetails(),details);
@@ -50,7 +50,7 @@ public class EntityTestSuite {
                 "testRole",true,true,
                 true,true);
         EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
-                "testHouseNo","testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00);
+                "testHouseNo","testContact","tempResponsibilities",LocalDate.of(2000, Calendar.MARCH,2),100.00);
         employee.setAppUserDetails(details);
         //when
         VehicleEntity vehicle=new VehicleEntity("tempStatus",true,"testBrand","testModel","testType","testCondition",
@@ -67,7 +67,7 @@ public class EntityTestSuite {
                 "testRole",true,true,
                 true,true);
         EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
-                "testHouseNo","testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00);
+                "testHouseNo","testContact","tempResponsibilities",LocalDate.of(2000, Calendar.MARCH,2),100.00);
         employee.setAppUserDetails(details);
         CustomerEntity customer=new CustomerEntity("testFirstName","testLastName",
                 "TestCode","TestCountry","testCity",

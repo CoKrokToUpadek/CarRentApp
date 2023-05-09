@@ -184,7 +184,7 @@ public class OpenEndPointServiceTestSuite {
                 true,true);
         EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName",
                 "testCountry","testCity", "testHouseNo",
-                "testContact",LocalDate.of(2000, Calendar.MARCH,2),100.00);
+                "testContact","tempResponsibilities",LocalDate.of(2000, Calendar.MARCH,2),100.00);
         employee.setAppUserDetails(details);
         CustomerEntity customer=new CustomerEntity("testFirstName","testLastName",
                 "TestCode","TestCountry","testCity",

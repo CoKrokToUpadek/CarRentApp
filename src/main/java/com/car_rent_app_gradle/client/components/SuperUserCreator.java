@@ -35,7 +35,7 @@ public class SuperUserCreator implements CommandLineRunner {
             AppUserDetailsEntity superUserDetailsEntity=new AppUserDetailsEntity("tempAdmin",encoder.encode("tempPassword"),"tempEmail",
                     RolesList.ROLE_ADMIN.toString(),true,true,true,true);
             EmployeeEntity superUserEmployeeEntity=new EmployeeEntity("0","temp","temp","temp",
-                    "temp","temp","temp", LocalDate.now(),0.00);
+                    "temp","temp","temp","temp", LocalDate.now(),0.00);
 
             appUserDetailsRepository.save(superUserDetailsEntity);
             AppUserDetailsEntity saved= appUserDetailsRepository.findBySystemUserLogin("tempAdmin").get();

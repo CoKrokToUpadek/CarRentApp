@@ -46,4 +46,7 @@ public class EmployeeDto {
     @JsonProperty("employeeSalary")
     private Double employeeSalary;
 
+    @JsonProperty("appUserDetails")
+    private AppUserDetailsDto employeeDetails;
+
 }
