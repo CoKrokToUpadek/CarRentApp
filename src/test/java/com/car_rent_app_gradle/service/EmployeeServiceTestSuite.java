@@ -1,26 +1,29 @@
 package com.car_rent_app_gradle.service;
 
 import com.car_rent_app_gradle.client.enums.RolesList;
-import com.car_rent_app_gradle.domain.dto.CustomerAccountCreationDto;
 import com.car_rent_app_gradle.domain.dto.EmployeeAccountCreationDto;
+import com.car_rent_app_gradle.domain.dto.EmployeeDto;
 import com.car_rent_app_gradle.errorhandlers.AppUserCreationValidationAndExceptions;
-import com.car_rent_app_gradle.mapper.VehicleMapper;
+import com.car_rent_app_gradle.errorhandlers.EmployeeDbEmptyException;
 import com.car_rent_app_gradle.repository.AppUserDetailsRepository;
 import com.car_rent_app_gradle.repository.CustomerRepository;
 import com.car_rent_app_gradle.repository.EmployeeRepository;
-import com.car_rent_app_gradle.repository.VehicleRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-H2TestDb.properties")
-public class EmployeeEndPointServiceTestSuite {
+@Transactional
+public class EmployeeServiceTestSuite {
 
     @Autowired
     EmployeeService employeeService;
@@ -33,7 +36,7 @@ public class EmployeeEndPointServiceTestSuite {
     @Autowired
     CustomerRepository customerRepository;
 
-    @AfterEach
+    @BeforeEach
     public void garbageCollector(){
         customerRepository.deleteAll();
         employeeRepository.deleteAll();
@@ -76,16 +79,16 @@ public class EmployeeEndPointServiceTestSuite {
     @Test
     void addEmployeeEmailTakenTest() {
         String output;
-        EmployeeAccountCreationDto dto=EmployeeAccountCreationDto.builder().firstName("testName").lastName("testLastName")
+        EmployeeAccountCreationDto dto2=EmployeeAccountCreationDto.builder().firstName("testName").lastName("testLastName")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .securityNumber("testSecurityNumber").responsibilities("testResponsibilities").joinedDate(LocalDate.now())
                 .employeeSalary(2000.00).systemUserRole(RolesList.ROLE_EMPLOYEE)
                 .systemUserLogin("testUserLogin12345").systemUserPassword("testUserPassword_123").systemUserEmail("testUser@Email1234")
                 .build();
-        employeeService.addEmployee(dto);
+        employeeService.addEmployee(dto2);
         //when
-        dto.setSystemUserLogin("newTestUserLogin12345");
-        output= employeeService.addEmployee(dto);
+        dto2.setSystemUserLogin("newTestUserLogin12345");
+        output= employeeService.addEmployee(dto2);
         //then
         Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_EMAIL_TAKEN,output);
     }
@@ -137,6 +140,25 @@ public class EmployeeEndPointServiceTestSuite {
         //then
         Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_WRONG_EMAIL_FORMAT,output);
     }
+
+
+    @Test
+    void getEmployeeListWithRecordsTest() throws EmployeeDbEmptyException {
+        //given
+        EmployeeAccountCreationDto dto=EmployeeAccountCreationDto.builder().firstName("testName").lastName("testLastName")
+                .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
+                .securityNumber("testSecurityNumber").responsibilities("testResponsibilities").joinedDate(LocalDate.now())
+                .employeeSalary(2000.00).systemUserRole(RolesList.ROLE_EMPLOYEE)
+                .systemUserLogin("testUserLogin").systemUserPassword("testUserPassword_123").systemUserEmail("testUser@Email")
+                .build();
+        employeeService.addEmployee(dto);
+        //when
+        List<EmployeeDto> employeeDtoList=employeeService.getEmployeeList();
+        //then
+        Assertions.assertEquals(1,employeeDtoList.size());
+    }
+
+
 
 
 }

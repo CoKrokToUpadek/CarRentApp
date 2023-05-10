@@ -1,6 +1,7 @@
 package com.car_rent_app_gradle.controller;
 
 import com.car_rent_app_gradle.domain.dto.*;
+import com.car_rent_app_gradle.errorhandlers.EmployeeDbEmptyException;
 import com.car_rent_app_gradle.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -60,7 +61,7 @@ public class EmployeeController {
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")//TODO add tests
     @GetMapping("/getEmployeeList")
-    public ResponseEntity<List<EmployeeDto>> getEmployeeList(){
+    public ResponseEntity<List<EmployeeDto>> getEmployeeList() throws EmployeeDbEmptyException {
         return new  ResponseEntity(employeeService.getEmployeeList(), HttpStatus.OK);
     }
 

@@ -12,18 +12,23 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EmptyAuthenticationException.class)
     public ResponseEntity<Object> emptyAuthenticationExceptionHandler(EmptyAuthenticationException exception){
-        return new ResponseEntity<>("Authentication data missing", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(ApplicationDataBaseException.class)
     public ResponseEntity<Object> applicationDataBaseExceptionHandler(ApplicationDataBaseException exception){
-        return new ResponseEntity<>("Error while fetching newly created user", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(VehicleListIsEmptyException.class)
     public ResponseEntity<Object> vehicleListIsEmptyExceptionHandler(VehicleListIsEmptyException exception){
-        return new ResponseEntity<>("No vehicles available", HttpStatus.OK); /*made so that front can do some sneaky redirect
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.OK); /*made so that front can do some sneaky redirect
         instead of printing empty list*/
+    }
+
+    @ExceptionHandler(EmployeeDbEmptyException.class)
+    public ResponseEntity<Object> EmployeeDbEmptyExceptionHandler(EmployeeDbEmptyException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.OK);
     }
 
 }

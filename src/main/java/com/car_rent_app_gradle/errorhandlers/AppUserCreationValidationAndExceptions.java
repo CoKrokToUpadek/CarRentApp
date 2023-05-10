@@ -8,7 +8,6 @@ public class AppUserCreationValidationAndExceptions extends Exception{
     public static final String ERR_EMAIL_TAKEN = "Account with specified email already exist.";
     public static final String ERR_WRONG_LOGIN = "Login must be at least 4 characters long.";
     public static final String ERR_WRONG_PASSWORD = "A password must be at least 8 characters. It has to have at least one letter and one digit.";
-
     public static final String VALIDATION_PASS="Data is valid";
 
     public AppUserCreationValidationAndExceptions(String message) {

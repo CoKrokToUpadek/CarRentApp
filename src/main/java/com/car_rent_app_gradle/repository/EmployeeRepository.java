@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface EmployeeRepository extends CrudRepository<EmployeeEntity,Long> {
     EmployeeEntity findByEmployeeId(Long employeeId);
-    List<EmployeeEntity> findAll();//TODO change to optional and add some message if list is empty
+    List<EmployeeEntity> findAll();
 
 }

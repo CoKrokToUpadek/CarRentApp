@@ -2,7 +2,12 @@ package com.car_rent_app_gradle.controller;
 
 import com.car_rent_app_gradle.client.enums.RolesList;
 import com.car_rent_app_gradle.client.security_package.*;
+import com.car_rent_app_gradle.domain.dto.EmployeeAccountCreationDto;
+import com.car_rent_app_gradle.domain.dto.EmployeeDto;
 import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
+import com.car_rent_app_gradle.domain.entity.EmployeeEntity;
+import com.car_rent_app_gradle.errorhandlers.EmployeeDbEmptyException;
+import com.car_rent_app_gradle.errorhandlers.ExceptionMessagesEnum;
 import com.car_rent_app_gradle.mapper.AppUserDetailsMapper;
 import com.car_rent_app_gradle.mapper.CustomerMapper;
 import com.car_rent_app_gradle.mapper.EmployeeMapper;
@@ -14,6 +19,7 @@ import com.car_rent_app_gradle.repository.VehicleRepository;
 import com.car_rent_app_gradle.service.CommonDataUserService;
 import com.car_rent_app_gradle.service.EmployeeService;
 import com.car_rent_app_gradle.service.OpenEndPointsService;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +41,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -112,4 +122,38 @@ public class EmployeeControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         Assertions.assertEquals("Employee was created successfully.", result.getResponse().getContentAsString());
     }
+
+    @Test
+    void getEmployeeListWithRecordsTest() throws Exception {
+        //given
+        List<EmployeeEntity> employeeEntityList=new ArrayList<>();
+
+        AppUserDetailsEntity details=new AppUserDetailsEntity("testLogin","testPassword","testEmail",
+                RolesList.ROLE_EMPLOYEE.toString(),true,true,
+                true,true);
+        EmployeeEntity employee=new EmployeeEntity("123","testFirstName","testLastName","testCountry","testCity",
+                "testHouseNo","testContact","tempResponsibilities",LocalDate.of(2000, Calendar.MARCH,2),100.00);
+        employee.setAppUserDetails(details);
+        employeeEntityList.add(employee);
+        employeeEntityList.add(employee);
+        when(employeeRepository.findAll()).thenReturn(employeeEntityList);
+        //when & then
+        mockMvc.perform(MockMvcRequestBuilders.get("/employee/getEmployeeList").with(httpBasic("admin","admin"))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)));
+    }
+
+    @Test
+    void getEmployeeEmptyListTest() throws Exception {
+        //given
+        when(employeeRepository.findAll()).thenReturn(new ArrayList<>());
+        //when & then
+        MvcResult result=     mockMvc.perform(MockMvcRequestBuilders.get("/employee/getEmployeeList").with(httpBasic("admin","admin"))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
+
+        Assertions.assertEquals(ExceptionMessagesEnum.EMPLOYEE_DB_EMPTY_EXCEPTION.getValue(), result.getResponse().getContentAsString());
+    }
+
 }
