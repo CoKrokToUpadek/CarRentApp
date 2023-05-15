@@ -3,17 +3,23 @@ package com.car_rent_app_gradle.service;
 import com.car_rent_app_gradle.client.enums.RolesList;
 import com.car_rent_app_gradle.domain.dto.EmployeeAccountCreationDto;
 import com.car_rent_app_gradle.domain.dto.EmployeeDto;
-import com.car_rent_app_gradle.errorhandlers.AppUserCreationValidationAndExceptions;
+import com.car_rent_app_gradle.domain.dto.VehicleForEmployeesDto;
+import com.car_rent_app_gradle.errorhandlers.AppOutputMessagesEnum;
+import com.car_rent_app_gradle.errorhandlers.AppUserCreationExceptionAndValidationEnum;
 import com.car_rent_app_gradle.errorhandlers.EmployeeDbEmptyException;
+import com.car_rent_app_gradle.errorhandlers.VehicleExceptionAndValidationEnum;
 import com.car_rent_app_gradle.repository.AppUserDetailsRepository;
 import com.car_rent_app_gradle.repository.CustomerRepository;
 import com.car_rent_app_gradle.repository.EmployeeRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.TestPropertySource;
 
 import javax.transaction.Transactional;
@@ -73,7 +79,7 @@ public class EmployeeServiceTestSuite {
         //when
         output= employeeService.addEmployee(dto);
         //then
-        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_LOGIN_TAKEN,output);
+        Assertions.assertEquals(AppUserCreationExceptionAndValidationEnum.ERR_LOGIN_TAKEN.getValue(),output);
     }
 
     @Test
@@ -90,7 +96,7 @@ public class EmployeeServiceTestSuite {
         dto2.setSystemUserLogin("newTestUserLogin12345");
         output= employeeService.addEmployee(dto2);
         //then
-        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_EMAIL_TAKEN,output);
+        Assertions.assertEquals(AppUserCreationExceptionAndValidationEnum.ERR_EMAIL_TAKEN.getValue(),output);
     }
 
     @Test
@@ -106,7 +112,7 @@ public class EmployeeServiceTestSuite {
         //when
         output= employeeService.addEmployee(dto);
         //then
-        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_WRONG_PASSWORD,output);
+        Assertions.assertEquals(AppUserCreationExceptionAndValidationEnum.ERR_WRONG_PASSWORD.getValue(),output);
     }
 
     @Test
@@ -122,7 +128,7 @@ public class EmployeeServiceTestSuite {
         //when
         output= employeeService.addEmployee(dto);
         //then
-        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_WRONG_LOGIN,output);
+        Assertions.assertEquals(AppUserCreationExceptionAndValidationEnum.ERR_WRONG_LOGIN.getValue(),output);
     }
 
     @Test
@@ -138,7 +144,7 @@ public class EmployeeServiceTestSuite {
         //when
         output= employeeService.addEmployee(dto);
         //then
-        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_WRONG_EMAIL_FORMAT,output);
+        Assertions.assertEquals(AppUserCreationExceptionAndValidationEnum.ERR_WRONG_EMAIL_FORMAT.getValue(),output);
     }
 
 
@@ -160,5 +166,53 @@ public class EmployeeServiceTestSuite {
 
 
 
+
+    @Test
+    void addNewVehicleSuccessTest(){
+        //given
+        Authentication authentication = new UsernamePasswordAuthenticationToken("testUserLogin", "testUserPassword_123");
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        EmployeeAccountCreationDto dto=EmployeeAccountCreationDto.builder().firstName("testName").lastName("testLastName")
+                .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
+                .securityNumber("testSecurityNumber").responsibilities("testResponsibilities").joinedDate(LocalDate.now())
+                .employeeSalary(2000.00).systemUserRole(RolesList.ROLE_EMPLOYEE)
+                .systemUserLogin("testUserLogin").systemUserPassword("testUserPassword_123").systemUserEmail("testUser@Email")
+                .build();
+        employeeService.addEmployee(dto);
+        VehicleForEmployeesDto vehicleDto=new VehicleForEmployeesDto("testBrand",
+                "testModel","testType","testCondition",20.00,"testPlateNumber",2000);
+        //when
+         String msg= employeeService.addNewVehicle(vehicleDto,securityContext);
+
+        //then
+        Assertions.assertEquals(VehicleExceptionAndValidationEnum.VEHICLE_ADD_SUCCESS.getValue(),msg);
+    }
+
+    @Test
+    void addNewVehicleAlreadyInDBTest(){
+        //given
+        Authentication authentication = new UsernamePasswordAuthenticationToken("testUserLogin", "testUserPassword_123");
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        EmployeeAccountCreationDto dto=EmployeeAccountCreationDto.builder().firstName("testName").lastName("testLastName")
+                .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
+                .securityNumber("testSecurityNumber").responsibilities("testResponsibilities").joinedDate(LocalDate.now())
+                .employeeSalary(2000.00).systemUserRole(RolesList.ROLE_EMPLOYEE)
+                .systemUserLogin("testUserLogin").systemUserPassword("testUserPassword_123").systemUserEmail("testUser@Email")
+                .build();
+        employeeService.addEmployee(dto);
+        VehicleForEmployeesDto vehicleDto=new VehicleForEmployeesDto("testBrand",
+                "testModel","testType","testCondition",20.00,"testPlateNumber",2000);
+        employeeService.addNewVehicle(vehicleDto,securityContext);
+        //when
+        String msg= employeeService.addNewVehicle(vehicleDto,securityContext);
+        //then
+        Assertions.assertEquals(VehicleExceptionAndValidationEnum.VEHICLE_ALREADY_IN_DB_EXCEPTION.getValue(),msg);
+    }
 
 }

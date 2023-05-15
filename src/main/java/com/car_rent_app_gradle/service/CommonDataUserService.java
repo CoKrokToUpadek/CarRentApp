@@ -4,7 +4,7 @@ import com.car_rent_app_gradle.client.enums.RolesList;
 import com.car_rent_app_gradle.domain.dto.CommonFieldsAccountCreationDto;
 import com.car_rent_app_gradle.domain.dto.CustomerAccountCreationDto;
 import com.car_rent_app_gradle.domain.dto.EmployeeAccountCreationDto;
-import com.car_rent_app_gradle.errorhandlers.AppUserCreationValidationAndExceptions;
+import com.car_rent_app_gradle.errorhandlers.AppUserCreationExceptionAndValidationEnum;
 import com.car_rent_app_gradle.repository.AppUserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,27 +65,27 @@ public class CommonDataUserService {
         }
 
         if (!dto.getSystemUserEmail().matches(emailPattern)){
-            return   AppUserCreationValidationAndExceptions.ERR_WRONG_EMAIL_FORMAT;
+            return   AppUserCreationExceptionAndValidationEnum.ERR_WRONG_EMAIL_FORMAT.getValue();
         }
 
         if (!dto.getSystemUserLogin().matches(loginPattern)){
-            return AppUserCreationValidationAndExceptions.ERR_WRONG_LOGIN;
+            return AppUserCreationExceptionAndValidationEnum.ERR_WRONG_LOGIN.getValue();
         }
 
         if (!dto.getSystemUserPassword().matches(passwordPattern)){
-            return AppUserCreationValidationAndExceptions.ERR_WRONG_PASSWORD;
+            return AppUserCreationExceptionAndValidationEnum.ERR_WRONG_PASSWORD.getValue();
         }
 
         if (missingInformationFromCommonData || missingInformationForSpecificRole) {
-            return AppUserCreationValidationAndExceptions.ERR_MISSING_INFORMATION;
+            return AppUserCreationExceptionAndValidationEnum.ERR_MISSING_INFORMATION.getValue();
         }
         if (appUserDetailsRepository.findBySystemUserLogin(dto.getSystemUserLogin()).isPresent()) {
-            return AppUserCreationValidationAndExceptions.ERR_LOGIN_TAKEN;
+            return AppUserCreationExceptionAndValidationEnum.ERR_LOGIN_TAKEN.getValue();
         }
 
         if (appUserDetailsRepository.findBySystemUserEmail(dto.getSystemUserEmail()).isPresent()) {
-            return AppUserCreationValidationAndExceptions.ERR_EMAIL_TAKEN;
+            return AppUserCreationExceptionAndValidationEnum.ERR_EMAIL_TAKEN.getValue();
         }
-        return AppUserCreationValidationAndExceptions.VALIDATION_PASS;
+        return AppUserCreationExceptionAndValidationEnum.VALIDATION_PASS.getValue();
     }
 }

@@ -2,12 +2,11 @@ package com.car_rent_app_gradle.controller;
 
 import com.car_rent_app_gradle.client.enums.RolesList;
 import com.car_rent_app_gradle.client.security_package.*;
-import com.car_rent_app_gradle.domain.dto.EmployeeAccountCreationDto;
-import com.car_rent_app_gradle.domain.dto.EmployeeDto;
 import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
 import com.car_rent_app_gradle.domain.entity.EmployeeEntity;
-import com.car_rent_app_gradle.errorhandlers.EmployeeDbEmptyException;
-import com.car_rent_app_gradle.errorhandlers.ExceptionMessagesEnum;
+import com.car_rent_app_gradle.errorhandlers.AppOutputMessagesEnum;
+import com.car_rent_app_gradle.errorhandlers.AppUserCreationExceptionAndValidationEnum;
+import com.car_rent_app_gradle.errorhandlers.VehicleExceptionAndValidationEnum;
 import com.car_rent_app_gradle.mapper.AppUserDetailsMapper;
 import com.car_rent_app_gradle.mapper.CustomerMapper;
 import com.car_rent_app_gradle.mapper.EmployeeMapper;
@@ -32,7 +31,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -40,6 +38,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 @TestPropertySource("classpath:application-H2TestDb.properties")
 @Import({OpenEndPointsService.class, TokenService.class,JWTConfig.class
         , AppUserSpringSecurityDetailsService.class, AppUserDetailsService.class, EmployeeService.class,EmployeeMapper.class
-        , AppUserDetailsMapper.class, CommonDataUserService.class})
+        , AppUserDetailsMapper.class, CommonDataUserService.class,VehicleMapper.class})
 public class EmployeeControllerTestSuite {
 
     @Autowired
@@ -71,9 +70,6 @@ public class EmployeeControllerTestSuite {
 
     @MockBean
     VehicleRepository vehicleRepository;
-
-    @MockBean
-    VehicleMapper vehicleMapper;
 
     @MockBean
     CustomerRepository customerRepository;
@@ -120,7 +116,7 @@ public class EmployeeControllerTestSuite {
         MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/employee/addEmployee").with(httpBasic("admin","admin"))
                         .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
-        Assertions.assertEquals("Employee was created successfully.", result.getResponse().getContentAsString());
+        Assertions.assertEquals(AppUserCreationExceptionAndValidationEnum.EMPLOYEE_ADD_SUCCESS.getValue(), result.getResponse().getContentAsString());
     }
 
     @Test
@@ -153,7 +149,33 @@ public class EmployeeControllerTestSuite {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
 
-        Assertions.assertEquals(ExceptionMessagesEnum.EMPLOYEE_DB_EMPTY_EXCEPTION.getValue(), result.getResponse().getContentAsString());
+        Assertions.assertEquals(AppUserCreationExceptionAndValidationEnum.EMPLOYEE_DB_EMPTY_EXCEPTION.getValue(), result.getResponse().getContentAsString());
     }
+
+    @Test
+    void addNewVehicleValidTest() throws Exception {
+        AppUserDetailsEntity entity=  new AppUserDetailsEntity("admin","admin","adminMail",
+                RolesList.ROLE_ADMIN.toString(),true,true,true,true);
+        when(appUserDetailsRepository.findBySystemUserLogin("admin")).thenReturn(Optional.of(entity));
+        File jsonFile = new File("src/test/resources/newVehicleValid.json");
+        byte[] jsonBytes = Files.readAllBytes(jsonFile.toPath());
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/employee/addNewVehicle").with(httpBasic("admin","admin"))
+                        .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
+                .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
+        Assertions.assertEquals(VehicleExceptionAndValidationEnum.VEHICLE_ADD_SUCCESS.getValue(), result.getResponse().getContentAsString());
+    }
+    @Test
+    void addNewVehicleInvalidTest() throws Exception {
+        AppUserDetailsEntity entity=  new AppUserDetailsEntity("admin","admin","adminMail",
+                RolesList.ROLE_ADMIN.toString(),true,true,true,true);
+        when(appUserDetailsRepository.findBySystemUserLogin("admin")).thenReturn(Optional.of(entity));
+        File jsonFile = new File("src/test/resources/newVehicleInvalid.json");
+        byte[] jsonBytes = Files.readAllBytes(jsonFile.toPath());
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/employee/addNewVehicle").with(httpBasic("admin","admin"))
+                        .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
+                .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
+        Assertions.assertEquals(VehicleExceptionAndValidationEnum.VEHICLE_DATA_MISSING_EXCEPTION.getValue(), result.getResponse().getContentAsString());
+    }
+
 
 }

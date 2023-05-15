@@ -25,10 +25,10 @@ public class EmployeeController {
     private final EmployeeService employeeService;
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     @PostMapping("/addNewVehicle")
-    public ResponseEntity<String> addNewVehicle(@CurrentSecurityContext SecurityContext context, @RequestBody VehicleForCustomersDto carDto){
-        return ResponseEntity.ok("ok mk");
+    public ResponseEntity<String> addNewVehicle(@CurrentSecurityContext SecurityContext context, @RequestBody VehicleForEmployeesDto carDto){
+        return new ResponseEntity(employeeService.addNewVehicle(carDto,context),HttpStatus.OK);
     }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")//TODO vehicle can only be removed if it was never rented to keep db integrity
     @DeleteMapping("/removeVehicle")
     public ResponseEntity<String> removeVehicle(@CurrentSecurityContext SecurityContext context,@RequestParam Long carId){
         return ResponseEntity.ok("ok mk");
@@ -59,7 +59,7 @@ public class EmployeeController {
     public ResponseEntity<String> editEmployee(@RequestParam Long employeeId){
         return ResponseEntity.ok("ok mk");
     }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")//TODO add tests
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")//ok
     @GetMapping("/getEmployeeList")
     public ResponseEntity<List<EmployeeDto>> getEmployeeList() throws EmployeeDbEmptyException {
         return new  ResponseEntity(employeeService.getEmployeeList(), HttpStatus.OK);

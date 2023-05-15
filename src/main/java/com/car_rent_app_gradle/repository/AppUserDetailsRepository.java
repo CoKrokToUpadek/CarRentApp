@@ -11,6 +11,7 @@ public interface AppUserDetailsRepository extends CrudRepository<AppUserDetailsE
     //added because I got stuck in createAccount Service method cause of mocks
     Optional<AppUserDetailsEntity> findBySystemUserLoginAndSystemUserEmail(String login,String email);
     Optional<AppUserDetailsEntity> findBySystemUserEmail(String email);
+
     List<AppUserDetailsEntity> findAll();
 
 }

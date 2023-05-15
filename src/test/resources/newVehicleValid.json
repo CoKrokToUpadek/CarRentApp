@@ -1,0 +1,9 @@
+{
+  "vehicleBrand": "vehicleBrand" ,
+  "vehicleModel": "vehicleModel" ,
+  "vehicleType": "vehicleType" ,
+  "vehicleCondition": "vehicleCondition" ,
+  "vehicleDailyPrice": 20.00,
+  "vehiclePlateNumber": "vehiclePlateNumber" ,
+  "vehicleMillage": 200
+}

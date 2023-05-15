@@ -7,7 +7,7 @@ import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
 import com.car_rent_app_gradle.domain.entity.CustomerEntity;
 import com.car_rent_app_gradle.domain.entity.EmployeeEntity;
 import com.car_rent_app_gradle.domain.entity.VehicleEntity;
-import com.car_rent_app_gradle.errorhandlers.AppUserCreationValidationAndExceptions;
+import com.car_rent_app_gradle.errorhandlers.AppUserCreationExceptionAndValidationEnum;
 import com.car_rent_app_gradle.errorhandlers.EmptyAuthenticationException;
 import com.car_rent_app_gradle.errorhandlers.VehicleListIsEmptyException;
 import com.car_rent_app_gradle.mapper.VehicleMapper;
@@ -102,7 +102,7 @@ public class OpenEndPointServiceTestSuite {
         //when
         output= openEndPointsService.createCustomerAccount(dto);
         //then
-        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_LOGIN_TAKEN,output);
+        Assertions.assertEquals(AppUserCreationExceptionAndValidationEnum.ERR_LOGIN_TAKEN.getValue(),output);
     }
 
     @Test
@@ -118,7 +118,7 @@ public class OpenEndPointServiceTestSuite {
         dto.setSystemUserLogin("newTestLogin");
         output= openEndPointsService.createCustomerAccount(dto);
         //then
-        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_EMAIL_TAKEN,output);
+        Assertions.assertEquals(AppUserCreationExceptionAndValidationEnum.ERR_EMAIL_TAKEN.getValue(),output);
     }
 
     @Test
@@ -132,7 +132,7 @@ public class OpenEndPointServiceTestSuite {
         dto.setSystemUserPassword("123");
         output= openEndPointsService.createCustomerAccount(dto);
         //then
-        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_WRONG_PASSWORD,output);
+        Assertions.assertEquals(AppUserCreationExceptionAndValidationEnum.ERR_WRONG_PASSWORD.getValue(),output);
     }
 
     @Test
@@ -146,7 +146,7 @@ public class OpenEndPointServiceTestSuite {
         dto.setSystemUserLogin("123");
         output= openEndPointsService.createCustomerAccount(dto);
         //then
-        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_WRONG_LOGIN,output);
+        Assertions.assertEquals(AppUserCreationExceptionAndValidationEnum.ERR_WRONG_LOGIN.getValue(),output);
     }
 
     @Test
@@ -160,7 +160,7 @@ public class OpenEndPointServiceTestSuite {
         dto.setSystemUserEmail("123");
         output= openEndPointsService.createCustomerAccount(dto);
         //then
-        Assertions.assertEquals(AppUserCreationValidationAndExceptions.ERR_WRONG_EMAIL_FORMAT,output);
+        Assertions.assertEquals(AppUserCreationExceptionAndValidationEnum.ERR_WRONG_EMAIL_FORMAT.getValue(),output);
     }
 
     @Test

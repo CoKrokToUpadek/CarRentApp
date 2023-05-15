@@ -10,7 +10,7 @@ import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
 import com.car_rent_app_gradle.domain.entity.CustomerEntity;
 import com.car_rent_app_gradle.errorhandlers.ApplicationDataBaseException;
 import com.car_rent_app_gradle.errorhandlers.EmptyAuthenticationException;
-import com.car_rent_app_gradle.errorhandlers.AppUserCreationValidationAndExceptions;
+import com.car_rent_app_gradle.errorhandlers.AppUserCreationExceptionAndValidationEnum;
 import com.car_rent_app_gradle.errorhandlers.VehicleListIsEmptyException;
 import com.car_rent_app_gradle.mapper.AppUserDetailsMapper;
 import com.car_rent_app_gradle.mapper.CustomerMapper;
@@ -70,7 +70,7 @@ public class OpenEndPointsService {
         CustomerEntity customerEntity;
         AppUserDetailsEntity appUserDetailsEntity;
         String dtoVerification=commonDataUserService.validateUserCreationDto(customerAccountCreationDto,RolesList.ROLE_CUSTOMER);
-        if(!dtoVerification.equals(AppUserCreationValidationAndExceptions.VALIDATION_PASS)){
+        if(!dtoVerification.equals(AppUserCreationExceptionAndValidationEnum.VALIDATION_PASS.getValue())){
             return dtoVerification;
         }
 

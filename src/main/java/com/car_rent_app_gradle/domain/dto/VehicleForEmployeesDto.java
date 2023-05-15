@@ -2,14 +2,12 @@ package com.car_rent_app_gradle.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 
 @Data
 @AllArgsConstructor
+@RequiredArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VehicleForEmployeesDto {
@@ -17,11 +15,9 @@ public class VehicleForEmployeesDto {
     @JsonProperty("vehicleId")
     private Long vehicleId;
 
-    @NonNull
     @JsonProperty("vehicleStatus")
     private String vehicleStatus;
 
-    @NonNull
     @JsonProperty("vehicleIsAvailable")
     private Boolean vehicleNoLongerAvailable;
 

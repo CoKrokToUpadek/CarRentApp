@@ -3,7 +3,6 @@ package com.car_rent_app_gradle.mapper;
 import com.car_rent_app_gradle.client.enums.VehicleStatusList;
 import com.car_rent_app_gradle.domain.dto.VehicleForCustomersDto;
 import com.car_rent_app_gradle.domain.dto.VehicleForEmployeesDto;
-import com.car_rent_app_gradle.domain.entity.EmployeeEntity;
 import com.car_rent_app_gradle.domain.entity.VehicleEntity;
 import org.springframework.stereotype.Service;
 

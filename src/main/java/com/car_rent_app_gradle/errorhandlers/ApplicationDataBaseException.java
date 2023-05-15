@@ -4,6 +4,6 @@ import java.util.NoSuchElementException;
 
 public class ApplicationDataBaseException extends NoSuchElementException {
     public ApplicationDataBaseException() {
-        super(ExceptionMessagesEnum.APP_DB_EXCEPTION.getValue());
+        super(AppOutputMessagesEnum.APP_DB_EXCEPTION.getValue());
     }
 }
