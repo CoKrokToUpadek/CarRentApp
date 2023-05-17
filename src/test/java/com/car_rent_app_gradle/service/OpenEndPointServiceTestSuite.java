@@ -1,6 +1,6 @@
 package com.car_rent_app_gradle.service;
 
-import com.car_rent_app_gradle.domain.dto.CustomerAccountCreationDto;
+import com.car_rent_app_gradle.domain.dto.CustomerAccountDto;
 import com.car_rent_app_gradle.domain.dto.TokenAndRoleDto;
 import com.car_rent_app_gradle.domain.dto.VehicleForCustomersDto;
 import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
@@ -78,7 +78,7 @@ public class OpenEndPointServiceTestSuite {
     void createCustomerAccountSuccessTest(){
         //given
         String output;
-        CustomerAccountCreationDto dto2=CustomerAccountCreationDto.builder()
+        CustomerAccountDto dto2= CustomerAccountDto.builder()
                 .firstName("testName").lastName("testLastName").drivingLicense( "testDrivingLicence")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
@@ -93,7 +93,7 @@ public class OpenEndPointServiceTestSuite {
     @Test
     void createCustomerAccountLoginTakenTest() {
         String output;
-        CustomerAccountCreationDto dto=CustomerAccountCreationDto.builder()
+        CustomerAccountDto dto= CustomerAccountDto.builder()
                 .firstName("testName").lastName("testLastName").drivingLicense( "testDrivingLicence")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
@@ -108,7 +108,7 @@ public class OpenEndPointServiceTestSuite {
     @Test
     void createCustomerAccountEmailTakenTest() {
         String output;
-        CustomerAccountCreationDto dto=CustomerAccountCreationDto.builder()
+        CustomerAccountDto dto= CustomerAccountDto.builder()
                 .firstName("testName").lastName("testLastName").drivingLicense( "testDrivingLicence")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
@@ -124,7 +124,7 @@ public class OpenEndPointServiceTestSuite {
     @Test
     void createCustomerAccountWrongPasswordFormatTest() {
         String output;
-        CustomerAccountCreationDto dto=CustomerAccountCreationDto.builder()
+        CustomerAccountDto dto= CustomerAccountDto.builder()
                 .firstName("testName").lastName("testLastName").drivingLicense( "testDrivingLicence")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
@@ -138,7 +138,7 @@ public class OpenEndPointServiceTestSuite {
     @Test
     void createCustomerAccountWrongLoginFormatTest() {
         String output;
-        CustomerAccountCreationDto dto=CustomerAccountCreationDto.builder()
+        CustomerAccountDto dto= CustomerAccountDto.builder()
                 .firstName("testName").lastName("testLastName").drivingLicense( "testDrivingLicence")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")
@@ -152,7 +152,7 @@ public class OpenEndPointServiceTestSuite {
     @Test
     void createCustomerAccountWrongEmailFormatTest() {
         String output;
-        CustomerAccountCreationDto dto=CustomerAccountCreationDto.builder()
+        CustomerAccountDto dto= CustomerAccountDto.builder()
                 .firstName("testName").lastName("testLastName").drivingLicense( "testDrivingLicence")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .systemUserLogin("testUserLogin123").systemUserPassword("testUserPassword_123")

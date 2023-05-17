@@ -1,6 +1,8 @@
 package com.car_rent_app_gradle.controller;
 
+import com.car_rent_app_gradle.domain.dto.CustomerDto;
 import com.car_rent_app_gradle.domain.dto.ReservationDto;
+import com.car_rent_app_gradle.service.CustomerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CustomerController {
 
+    CustomerService customerService;
 
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
     @PostMapping("/rentNewVehicle")
@@ -26,8 +29,8 @@ public class CustomerController {
     }
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
     @PutMapping("/changePersonalInformation")
-    public ResponseEntity<String> changePersonalInformation(@CurrentSecurityContext SecurityContext context){//need security context
-        return ResponseEntity.ok("ok mk");
+    public ResponseEntity<String> changePersonalInformation(@CurrentSecurityContext SecurityContext context, @RequestBody CustomerDto customerDto){
+        return new ResponseEntity(customerService.changePersonalInformation(context.getAuthentication().getName(),customerDto), HttpStatus.OK);
     }
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
     @PutMapping("/cancelVehicleReservation")

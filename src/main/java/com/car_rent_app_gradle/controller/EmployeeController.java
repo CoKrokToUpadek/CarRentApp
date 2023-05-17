@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 @RestController
@@ -23,7 +22,7 @@ import java.util.Map;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")//ok
     @PostMapping("/addNewVehicle")
     public ResponseEntity<String> addNewVehicle(@CurrentSecurityContext SecurityContext context, @RequestBody VehicleForEmployeesDto carDto){
         return new ResponseEntity(employeeService.addNewVehicle(carDto,context),HttpStatus.OK);
@@ -51,7 +50,7 @@ public class EmployeeController {
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")//ok
     @PostMapping("/addEmployee")
-    public ResponseEntity<String> addEmployee(@RequestBody EmployeeAccountCreationDto employeeAccountCreationDto){
+    public ResponseEntity<String> addEmployee(@RequestBody EmployeeAccountDto employeeAccountCreationDto){
         return ResponseEntity.ok(employeeService.addEmployee(employeeAccountCreationDto));
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -65,6 +64,6 @@ public class EmployeeController {
         return new  ResponseEntity(employeeService.getEmployeeList(), HttpStatus.OK);
     }
 
-    //some sort of overwatch that would inform employee that manages transaction that transaction was canceled
+    //TODO some sort of over-watch that would inform employee that manages transaction that transaction was canceled
 
 }

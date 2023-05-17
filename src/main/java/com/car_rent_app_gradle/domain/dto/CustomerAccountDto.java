@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper=true)
 @JsonInclude(JsonInclude.Include.ALWAYS)
-public class CustomerAccountCreationDto extends CommonFieldsAccountCreationDto{
+public class CustomerAccountDto extends CommonFieldsAccountDto {
 
      @NonNull
      @JsonProperty("drivingLicense")

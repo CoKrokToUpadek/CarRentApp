@@ -1,9 +1,9 @@
 package com.car_rent_app_gradle.service;
 
 import com.car_rent_app_gradle.client.enums.RolesList;
-import com.car_rent_app_gradle.domain.dto.CommonFieldsAccountCreationDto;
-import com.car_rent_app_gradle.domain.dto.CustomerAccountCreationDto;
-import com.car_rent_app_gradle.domain.dto.EmployeeAccountCreationDto;
+import com.car_rent_app_gradle.domain.dto.CommonFieldsAccountDto;
+import com.car_rent_app_gradle.domain.dto.CustomerAccountDto;
+import com.car_rent_app_gradle.domain.dto.EmployeeAccountDto;
 import com.car_rent_app_gradle.errorhandlers.AppUserCreationExceptionAndValidationEnum;
 import com.car_rent_app_gradle.repository.AppUserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class CommonDataUserService {
         this.appUserDetailsRepository = appUserDetailsRepository;
     }
 
-    public String validateUserCreationDto(CommonFieldsAccountCreationDto dto, RolesList role){
+    public String validateUserCreationDto(CommonFieldsAccountDto dto, RolesList role){
 
         final String emailPattern = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
 
@@ -33,7 +33,7 @@ public class CommonDataUserService {
         final  String loginPattern = "^\\S{4,}$";
 
         boolean missingInformationForSpecificRole=false;
-        boolean missingInformationFromCommonData = Arrays.stream(CommonFieldsAccountCreationDto.class.getDeclaredFields()).anyMatch(field -> {
+        boolean missingInformationFromCommonData = Arrays.stream(CommonFieldsAccountDto.class.getDeclaredFields()).anyMatch(field -> {
             field.setAccessible(true);
             try {
                 return field.get(dto) == null;
@@ -43,7 +43,7 @@ public class CommonDataUserService {
         });
         switch (role) {
             case ROLE_CUSTOMER ->
-                    missingInformationForSpecificRole = Arrays.stream(CustomerAccountCreationDto.class.getDeclaredFields()).anyMatch(field -> {
+                    missingInformationForSpecificRole = Arrays.stream(CustomerAccountDto.class.getDeclaredFields()).anyMatch(field -> {
                         field.setAccessible(true);
                         try {
                             return field.get(dto) == null;
@@ -52,7 +52,7 @@ public class CommonDataUserService {
                         }
                     });
             case ROLE_EMPLOYEE ->
-                    missingInformationForSpecificRole = Arrays.stream(EmployeeAccountCreationDto.class.getDeclaredFields()).anyMatch(field -> {
+                    missingInformationForSpecificRole = Arrays.stream(EmployeeAccountDto.class.getDeclaredFields()).anyMatch(field -> {
                         field.setAccessible(true);
                         try {
                             return field.get(dto) == null;

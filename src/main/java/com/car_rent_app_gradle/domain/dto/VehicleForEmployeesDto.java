@@ -48,7 +48,4 @@ public class VehicleForEmployeesDto {
     @NonNull
     @JsonProperty("vehicleMillage")
     private Integer vehicleMillage;
-
-
-
 }

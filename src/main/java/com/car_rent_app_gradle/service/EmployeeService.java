@@ -3,7 +3,7 @@ package com.car_rent_app_gradle.service;
 import com.car_rent_app_gradle.client.enums.RolesList;
 import com.car_rent_app_gradle.client.enums.VehicleStatusList;
 import com.car_rent_app_gradle.domain.dto.AppUserDetailsDto;
-import com.car_rent_app_gradle.domain.dto.EmployeeAccountCreationDto;
+import com.car_rent_app_gradle.domain.dto.EmployeeAccountDto;
 import com.car_rent_app_gradle.domain.dto.EmployeeDto;
 import com.car_rent_app_gradle.domain.dto.VehicleForEmployeesDto;
 import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
@@ -57,7 +57,7 @@ public class EmployeeService {
         this.appUserDetailsMapper = appUserDetailsMapper;
     }
 
-    public String addEmployee(EmployeeAccountCreationDto employeeAccountCreationDto){
+    public String addEmployee(EmployeeAccountDto employeeAccountCreationDto){
         EmployeeEntity employeeEntity;
         AppUserDetailsEntity appUserDetailsEntity;
 
@@ -121,6 +121,17 @@ public class EmployeeService {
             vehicleEntity.setEmployeeThatRegisteredVehicle(employee);
             vehicleRepository.save(vehicleEntity);
             return VehicleExceptionAndValidationEnum.VEHICLE_ADD_SUCCESS.getValue();
+        }
+    }
+
+    public String deleteVehicle(Long vehicleId){//TODO needs tests
+        VehicleEntity entity=vehicleRepository.findById(vehicleId).orElseThrow(ApplicationDataBaseException::new);
+        if (!entity.getReservationsAssignedToVehicle().isEmpty() || !entity.getRentsInvolvedInVehicle().isEmpty()){
+            return VehicleExceptionAndValidationEnum.VEHICLE_WAS_RENTED_EXCEPTION.getValue();
+        }
+        else {
+            vehicleRepository.delete(entity);
+            return VehicleExceptionAndValidationEnum.VEHICLE_DELETION_SUCCESS.getValue();
         }
     }
 }

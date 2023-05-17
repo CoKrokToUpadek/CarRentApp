@@ -2,7 +2,6 @@ package com.car_rent_app_gradle.controller;
 
 import com.car_rent_app_gradle.client.enums.RolesList;
 import com.car_rent_app_gradle.client.security_package.*;
-import com.car_rent_app_gradle.domain.dto.CustomerAccountCreationDto;
 import com.car_rent_app_gradle.domain.dto.TokenAndRoleDto;
 import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
 import com.car_rent_app_gradle.domain.entity.EmployeeEntity;

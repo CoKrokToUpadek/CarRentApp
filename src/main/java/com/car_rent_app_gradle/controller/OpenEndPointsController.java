@@ -1,7 +1,7 @@
 package com.car_rent_app_gradle.controller;
 
 
-import com.car_rent_app_gradle.domain.dto.CustomerAccountCreationDto;
+import com.car_rent_app_gradle.domain.dto.CustomerAccountDto;
 import com.car_rent_app_gradle.domain.dto.TokenAndRoleDto;
 import com.car_rent_app_gradle.domain.dto.VehicleForCustomersDto;
 import com.car_rent_app_gradle.errorhandlers.EmptyAuthenticationException;
@@ -28,7 +28,7 @@ public class OpenEndPointsController {
     }
 
     @PostMapping("/createCustomerAccount")//ok
-    public ResponseEntity<String> createAccount(@RequestBody CustomerAccountCreationDto customerAccountCreationDto) {
+    public ResponseEntity<String> createAccount(@RequestBody CustomerAccountDto customerAccountCreationDto) {
         return ResponseEntity.ok(openEndPointsService.createCustomerAccount(customerAccountCreationDto));
     }
 
@@ -48,8 +48,8 @@ public class OpenEndPointsController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    @GetMapping("/helloAuthorized")//for testing purposes    //works
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")//ok
+    @GetMapping("/helloAuthorized")//for testing purposes
     public ResponseEntity<String> getTestMessageAuthorized() {
         return ResponseEntity.ok("hello from closed endpoint");
     }

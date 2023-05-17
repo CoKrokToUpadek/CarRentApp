@@ -12,7 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuperBuilder
-public class CommonFieldsAccountCreationDto {
+public class CommonFieldsAccountDto {
 
     @NonNull
     @JsonProperty("firstName")
@@ -32,7 +32,6 @@ public class CommonFieldsAccountCreationDto {
     @NonNull
     @JsonProperty("contact")
     private String contact;
-
     @NonNull
     @JsonProperty("systemUserLogin")
     private String systemUserLogin;
@@ -48,7 +47,7 @@ public class CommonFieldsAccountCreationDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CommonFieldsAccountCreationDto that = (CommonFieldsAccountCreationDto) o;
+        CommonFieldsAccountDto that = (CommonFieldsAccountDto) o;
 
         if (!firstName.equals(that.firstName)) return false;
         if (!lastName.equals(that.lastName)) return false;

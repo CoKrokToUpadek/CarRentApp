@@ -2,7 +2,7 @@ package com.car_rent_app_gradle.service;
 
 import com.car_rent_app_gradle.client.enums.RolesList;
 import com.car_rent_app_gradle.client.security_package.TokenService;
-import com.car_rent_app_gradle.domain.dto.CustomerAccountCreationDto;
+import com.car_rent_app_gradle.domain.dto.CustomerAccountDto;
 import com.car_rent_app_gradle.domain.dto.TokenAndRoleDto;
 import com.car_rent_app_gradle.domain.dto.VehicleForCustomersDto;
 
@@ -66,7 +66,7 @@ public class OpenEndPointsService {
         return tokenService.generateToken(authentication);
     }
 
-    public String createCustomerAccount(CustomerAccountCreationDto customerAccountCreationDto) {
+    public String createCustomerAccount(CustomerAccountDto customerAccountCreationDto) {
         CustomerEntity customerEntity;
         AppUserDetailsEntity appUserDetailsEntity;
         String dtoVerification=commonDataUserService.validateUserCreationDto(customerAccountCreationDto,RolesList.ROLE_CUSTOMER);

@@ -1,10 +1,9 @@
 package com.car_rent_app_gradle.service;
 
 import com.car_rent_app_gradle.client.enums.RolesList;
-import com.car_rent_app_gradle.domain.dto.EmployeeAccountCreationDto;
+import com.car_rent_app_gradle.domain.dto.EmployeeAccountDto;
 import com.car_rent_app_gradle.domain.dto.EmployeeDto;
 import com.car_rent_app_gradle.domain.dto.VehicleForEmployeesDto;
-import com.car_rent_app_gradle.errorhandlers.AppOutputMessagesEnum;
 import com.car_rent_app_gradle.errorhandlers.AppUserCreationExceptionAndValidationEnum;
 import com.car_rent_app_gradle.errorhandlers.EmployeeDbEmptyException;
 import com.car_rent_app_gradle.errorhandlers.VehicleExceptionAndValidationEnum;
@@ -53,7 +52,7 @@ public class EmployeeServiceTestSuite {
     void addEmployeeSuccessTest(){
         //given
         String output;
-        EmployeeAccountCreationDto dto=EmployeeAccountCreationDto.builder().firstName("testName").lastName("testLastName")
+        EmployeeAccountDto dto= EmployeeAccountDto.builder().firstName("testName").lastName("testLastName")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .securityNumber("testSecurityNumber").responsibilities("testResponsibilities").joinedDate(LocalDate.now())
                 .employeeSalary(2000.00).systemUserRole(RolesList.ROLE_EMPLOYEE)
@@ -69,7 +68,7 @@ public class EmployeeServiceTestSuite {
     @Test
     void addEmployeeLoginTakenTest() {
         String output;
-        EmployeeAccountCreationDto dto=EmployeeAccountCreationDto.builder().firstName("testName").lastName("testLastName")
+        EmployeeAccountDto dto= EmployeeAccountDto.builder().firstName("testName").lastName("testLastName")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .securityNumber("testSecurityNumber").responsibilities("testResponsibilities").joinedDate(LocalDate.now())
                 .employeeSalary(2000.00).systemUserRole(RolesList.ROLE_EMPLOYEE)
@@ -85,7 +84,7 @@ public class EmployeeServiceTestSuite {
     @Test
     void addEmployeeEmailTakenTest() {
         String output;
-        EmployeeAccountCreationDto dto2=EmployeeAccountCreationDto.builder().firstName("testName").lastName("testLastName")
+        EmployeeAccountDto dto2= EmployeeAccountDto.builder().firstName("testName").lastName("testLastName")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .securityNumber("testSecurityNumber").responsibilities("testResponsibilities").joinedDate(LocalDate.now())
                 .employeeSalary(2000.00).systemUserRole(RolesList.ROLE_EMPLOYEE)
@@ -102,7 +101,7 @@ public class EmployeeServiceTestSuite {
     @Test
     void addEmployeeEmailWrongPasswordFormatTest() {
         String output;
-        EmployeeAccountCreationDto dto=EmployeeAccountCreationDto.builder().firstName("testName").lastName("testLastName")
+        EmployeeAccountDto dto= EmployeeAccountDto.builder().firstName("testName").lastName("testLastName")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .securityNumber("testSecurityNumber").responsibilities("testResponsibilities").joinedDate(LocalDate.now())
                 .employeeSalary(2000.00).systemUserRole(RolesList.ROLE_EMPLOYEE)
@@ -118,7 +117,7 @@ public class EmployeeServiceTestSuite {
     @Test
     void addEmployeeEmailWrongLoginFormatTest() {
         String output;
-        EmployeeAccountCreationDto dto=EmployeeAccountCreationDto.builder().firstName("testName").lastName("testLastName")
+        EmployeeAccountDto dto= EmployeeAccountDto.builder().firstName("testName").lastName("testLastName")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .securityNumber("testSecurityNumber").responsibilities("testResponsibilities").joinedDate(LocalDate.now())
                 .employeeSalary(2000.00).systemUserRole(RolesList.ROLE_EMPLOYEE)
@@ -134,7 +133,7 @@ public class EmployeeServiceTestSuite {
     @Test
     void addEmployeeEmailWrongEmailFormatTest() {
         String output;
-        EmployeeAccountCreationDto dto=EmployeeAccountCreationDto.builder().firstName("testName").lastName("testLastName")
+        EmployeeAccountDto dto= EmployeeAccountDto.builder().firstName("testName").lastName("testLastName")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .securityNumber("testSecurityNumber").responsibilities("testResponsibilities").joinedDate(LocalDate.now())
                 .employeeSalary(2000.00).systemUserRole(RolesList.ROLE_EMPLOYEE)
@@ -151,7 +150,7 @@ public class EmployeeServiceTestSuite {
     @Test
     void getEmployeeListWithRecordsTest() throws EmployeeDbEmptyException {
         //given
-        EmployeeAccountCreationDto dto=EmployeeAccountCreationDto.builder().firstName("testName").lastName("testLastName")
+        EmployeeAccountDto dto= EmployeeAccountDto.builder().firstName("testName").lastName("testLastName")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .securityNumber("testSecurityNumber").responsibilities("testResponsibilities").joinedDate(LocalDate.now())
                 .employeeSalary(2000.00).systemUserRole(RolesList.ROLE_EMPLOYEE)
@@ -175,7 +174,7 @@ public class EmployeeServiceTestSuite {
         securityContext.setAuthentication(authentication);
         SecurityContextHolder.setContext(securityContext);
 
-        EmployeeAccountCreationDto dto=EmployeeAccountCreationDto.builder().firstName("testName").lastName("testLastName")
+        EmployeeAccountDto dto= EmployeeAccountDto.builder().firstName("testName").lastName("testLastName")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .securityNumber("testSecurityNumber").responsibilities("testResponsibilities").joinedDate(LocalDate.now())
                 .employeeSalary(2000.00).systemUserRole(RolesList.ROLE_EMPLOYEE)
@@ -199,7 +198,7 @@ public class EmployeeServiceTestSuite {
         securityContext.setAuthentication(authentication);
         SecurityContextHolder.setContext(securityContext);
 
-        EmployeeAccountCreationDto dto=EmployeeAccountCreationDto.builder().firstName("testName").lastName("testLastName")
+        EmployeeAccountDto dto= EmployeeAccountDto.builder().firstName("testName").lastName("testLastName")
                 .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
                 .securityNumber("testSecurityNumber").responsibilities("testResponsibilities").joinedDate(LocalDate.now())
                 .employeeSalary(2000.00).systemUserRole(RolesList.ROLE_EMPLOYEE)
@@ -213,6 +212,30 @@ public class EmployeeServiceTestSuite {
         String msg= employeeService.addNewVehicle(vehicleDto,securityContext);
         //then
         Assertions.assertEquals(VehicleExceptionAndValidationEnum.VEHICLE_ALREADY_IN_DB_EXCEPTION.getValue(),msg);
+    }
+
+
+    @Test
+    void deleteVehicleSuccessTest(){//TODO requires implementation of additional methods
+        //given
+        Authentication authentication = new UsernamePasswordAuthenticationToken("testUserLogin", "testUserPassword_123");
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        VehicleForEmployeesDto vehicleDto=new VehicleForEmployeesDto("testBrand",
+                "testModel","testType","testCondition",20.00,"testPlateNumber",2000);
+        EmployeeAccountDto dto= EmployeeAccountDto.builder().firstName("testName").lastName("testLastName")
+                .country("testCountry").city("testCity").streetAndHouseNo("testHouseNo").contact("testContact")
+                .securityNumber("testSecurityNumber").responsibilities("testResponsibilities").joinedDate(LocalDate.now())
+                .employeeSalary(2000.00).systemUserRole(RolesList.ROLE_EMPLOYEE)
+                .systemUserLogin("testUserLogin").systemUserPassword("testUserPassword_123").systemUserEmail("testUser@Email")
+                .build();
+        employeeService.addEmployee(dto);
+        employeeService.addNewVehicle(vehicleDto,securityContext);
+
+        //when
+
     }
 
 }
