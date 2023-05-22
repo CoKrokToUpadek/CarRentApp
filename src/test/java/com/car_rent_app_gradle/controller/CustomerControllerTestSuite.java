@@ -3,6 +3,7 @@ package com.car_rent_app_gradle.controller;
 import com.car_rent_app_gradle.client.enums.RolesList;
 import com.car_rent_app_gradle.client.security_package.*;
 import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
+import com.car_rent_app_gradle.domain.entity.CustomerEntity;
 import com.car_rent_app_gradle.domain.entity.EmployeeEntity;
 import com.car_rent_app_gradle.errorhandlers.AppUserCreationExceptionAndValidationEnum;
 import com.car_rent_app_gradle.errorhandlers.VehicleExceptionAndValidationEnum;
@@ -54,7 +55,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 @TestPropertySource("classpath:application-H2TestDb.properties")
 @Import({OpenEndPointsService.class, TokenService.class,JWTConfig.class
         , AppUserSpringSecurityDetailsService.class, AppUserDetailsService.class, CustomerService.class,EmployeeMapper.class
-        , AppUserDetailsMapper.class, CommonDataUserService.class,CustomerMapper.class,VehicleMapper.class})
+        , AppUserDetailsMapper.class, CommonDataUserService.class,CustomerMapper.class,VehicleMapper.class,CustomerMapper.class})
 public class CustomerControllerTestSuite {
 
     @Autowired
@@ -73,10 +74,6 @@ public class CustomerControllerTestSuite {
     @MockBean
     CustomerRepository customerRepository;
 
-    @MockBean
-    CustomerMapper customerMapper;
-
-
 
 
     @TestConfiguration
@@ -94,17 +91,45 @@ public class CustomerControllerTestSuite {
         AppUserDetailsEntity entity=  new AppUserDetailsEntity("admin","admin","adminMail",
                 RolesList.ROLE_CUSTOMER.toString(),true,true,true,true);
         when(service.loadUserByUsername("admin")).thenReturn(new AppUserDetails(entity));
-        when(appUserDetailsRepository.findBySystemUserLoginAndSystemUserEmail(any(),any())).thenReturn(Optional.of(entity));
+     //   when(appUserDetailsRepository.findBySystemUserLoginAndSystemUserEmail(any(),any())).thenReturn(Optional.of(entity));
     }
 
     @Test
-    void changePersonalInformationValidTest() throws Exception {//TODO fix this
+    void changePersonalInformationValidTest() throws Exception {
+        //given
+        AppUserDetailsEntity entity=  new AppUserDetailsEntity("admin","admin","adminMail",
+                RolesList.ROLE_CUSTOMER.toString(),true,true,true,true);
+        CustomerEntity customerEntity=new CustomerEntity(1L,"test_to_be_changed","test",
+                "test","test","test","test",
+                "test",new ArrayList<>(),new ArrayList<>(),entity);
         File jsonFile = new File("src/test/resources/testCustomerChangedInfoValid.json");
         byte[] jsonBytes = Files.readAllBytes(jsonFile.toPath());
+        when(appUserDetailsRepository.findBySystemUserLogin("admin")).thenReturn(Optional.of(entity));
+        when(customerRepository.findByAppUserDetails(entity)).thenReturn(Optional.of(customerEntity));
+        //when & then
         MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.put("/customer/changePersonalInformation").with(httpBasic("admin","admin"))
                         .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
                     .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
-        Assertions.assertEquals("Information provided in form was incomplete or invalid.", result.getResponse().getContentAsString());
+        Assertions.assertEquals("Personal information data changed successfully.", result.getResponse().getContentAsString());
+    }
+
+    @Test
+    void changePersonalInformationInvalidDataTest() throws Exception {
+        //given
+        AppUserDetailsEntity entity=  new AppUserDetailsEntity("admin","admin","adminMail",
+                RolesList.ROLE_CUSTOMER.toString(),true,true,true,true);
+        CustomerEntity customerEntity=new CustomerEntity(1L,"test_to_be_changed","test",
+                "test","test","test","test",
+                "test",new ArrayList<>(),new ArrayList<>(),entity);
+        File jsonFile = new File("src/test/resources/testCustomerChangedInfoInvalid.json");
+        byte[] jsonBytes = Files.readAllBytes(jsonFile.toPath());
+        when(appUserDetailsRepository.findBySystemUserLogin("admin")).thenReturn(Optional.of(entity));
+        when(customerRepository.findByAppUserDetails(entity)).thenReturn(Optional.of(customerEntity));
+        //when & then
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.put("/customer/changePersonalInformation").with(httpBasic("admin","admin"))
+                        .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
+                .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
+        Assertions.assertEquals("Fields are empty or missing. Check if all fields were mapped properly.", result.getResponse().getContentAsString());
     }
 
 
