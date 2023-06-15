@@ -11,7 +11,6 @@ import java.time.LocalDate;
 
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuperBuilder

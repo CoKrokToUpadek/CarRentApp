@@ -32,21 +32,22 @@ import java.util.List;
 @Service
 @Transactional
 public class OpenEndPointsService {
-    VehicleRepository vehicleRepository;
-    EmployeeRepository employeeRepository;
-    CustomerRepository customerRepository;
-    AppUserDetailsRepository appUserDetailsRepository;
-    VehicleMapper vehicleMapper;
-    CustomerMapper customerMapper;
-    AppUserDetailsMapper appUserDetailsMapper;
-    TokenService tokenService;
-    PasswordEncoder encoder;
-    CommonDataUserService commonDataUserService;
+
+    private final  VehicleRepository vehicleRepository;
+    private final   EmployeeRepository employeeRepository;
+    private final   CustomerRepository customerRepository;
+    private final   AppUserDetailsRepository appUserDetailsRepository;
+    private final   VehicleMapper vehicleMapper;
+    private final   CustomerMapper customerMapper;
+    private final    AppUserDetailsMapper appUserDetailsMapper;
+    private final    TokenService tokenService;
+    private final    PasswordEncoder encoder;
+    private final CommonDataUserServiceRecord commonDataUserServiceRecord;
 
     public OpenEndPointsService(VehicleRepository vehicleRepository, EmployeeRepository employeeRepository,
                                 CustomerRepository customerRepository, AppUserDetailsRepository appUserDetailsRepository,
                                 VehicleMapper vehicleMapper, CustomerMapper customerMapper, AppUserDetailsMapper appUserDetailsMapper,
-                                TokenService tokenService, PasswordEncoder encoder, CommonDataUserService commonDataUserService) {
+                                TokenService tokenService, PasswordEncoder encoder, CommonDataUserServiceRecord commonDataUserServiceRecord) {
         this.vehicleRepository = vehicleRepository;
         this.employeeRepository = employeeRepository;
         this.customerRepository = customerRepository;
@@ -56,7 +57,7 @@ public class OpenEndPointsService {
         this.appUserDetailsMapper = appUserDetailsMapper;
         this.tokenService = tokenService;
         this.encoder = encoder;
-        this.commonDataUserService = commonDataUserService;
+        this.commonDataUserServiceRecord = commonDataUserServiceRecord;
     }
 
     public TokenAndRoleDto generateToken(Authentication authentication) throws EmptyAuthenticationException {
@@ -69,7 +70,7 @@ public class OpenEndPointsService {
     public String createCustomerAccount(CustomerAccountDto customerAccountCreationDto) {
         CustomerEntity customerEntity;
         AppUserDetailsEntity appUserDetailsEntity;
-        String dtoVerification=commonDataUserService.validateUserCreationDto(customerAccountCreationDto,RolesList.ROLE_CUSTOMER);
+        String dtoVerification= commonDataUserServiceRecord.validateUserCreationDto(customerAccountCreationDto,RolesList.ROLE_CUSTOMER);
         if(!dtoVerification.equals(AppUserCreationExceptionAndValidationEnum.VALIDATION_PASS.getValue())){
             return dtoVerification;
         }

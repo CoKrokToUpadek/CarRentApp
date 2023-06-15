@@ -23,43 +23,43 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")//ok
-    @PostMapping("/addNewVehicle")
+    @PostMapping("/add-mew-vehicle")
     public ResponseEntity<String> addNewVehicle(@CurrentSecurityContext SecurityContext context, @RequestBody VehicleForEmployeesDto carDto){
         return new ResponseEntity(employeeService.addNewVehicle(carDto,context),HttpStatus.OK);
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")//TODO vehicle can only be removed if it was never rented to keep db integrity
-    @DeleteMapping("/removeVehicle")
+    @DeleteMapping("/remove-vehicle")
     public ResponseEntity<String> removeVehicle(@CurrentSecurityContext SecurityContext context,@RequestParam Long carId){
         return ResponseEntity.ok("ok mk");
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    @DeleteMapping("/editVehicle")
+    @DeleteMapping("/edit-vehicle")
     public ResponseEntity<String> editVehicle(@CurrentSecurityContext SecurityContext context,@RequestParam Long carId){
         return ResponseEntity.ok("ok mk");
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    @GetMapping("/getReservationManagedByMe")
+    @GetMapping("/get-reservations-managed-by-me")
     public ResponseEntity<String> getReservationManagedByMe(@CurrentSecurityContext SecurityContext context){
         return ResponseEntity.ok("ok mk");
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @GetMapping("/getAllReservations")
+    @GetMapping("/get-all-reservations")
     public ResponseEntity<List<ReservationDto>> getAllReservations(){
         List<ReservationDto> reservationDtoList=new ArrayList<>();
         return new ResponseEntity(reservationDtoList,HttpStatus.OK);
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")//ok
-    @PostMapping("/addEmployee")
+    @PostMapping("/add-employee")
     public ResponseEntity<String> addEmployee(@RequestBody EmployeeAccountDto employeeAccountCreationDto){
         return ResponseEntity.ok(employeeService.addEmployee(employeeAccountCreationDto));
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PutMapping("/editEmployee")
+    @PutMapping("/edit-employee")
     public ResponseEntity<String> editEmployee(@RequestParam Long employeeId){
         return ResponseEntity.ok("ok mk");
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")//ok
-    @GetMapping("/getEmployeeList")
+    @GetMapping("/get-employee-list")
     public ResponseEntity<List<EmployeeDto>> getEmployeeList() throws EmployeeDbEmptyException {
         return new  ResponseEntity(employeeService.getEmployeeList(), HttpStatus.OK);
     }

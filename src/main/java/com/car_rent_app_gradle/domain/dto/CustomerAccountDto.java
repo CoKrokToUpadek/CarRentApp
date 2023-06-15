@@ -7,7 +7,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuperBuilder

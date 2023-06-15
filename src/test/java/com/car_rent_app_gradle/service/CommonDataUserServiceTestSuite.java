@@ -10,7 +10,7 @@ import org.springframework.test.context.TestPropertySource;
 public class CommonDataUserServiceTestSuite {
 
     @Autowired
-    CommonDataUserService commonDataUserService;
+    CommonDataUserServiceRecord commonDataUserServiceRecord;
 
     @Test
     void validateUserCreationDtoEmployeeTest(){

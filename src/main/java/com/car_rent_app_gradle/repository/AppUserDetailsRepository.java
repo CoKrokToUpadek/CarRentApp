@@ -2,10 +2,12 @@ package com.car_rent_app_gradle.repository;
 
 import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface AppUserDetailsRepository extends CrudRepository<AppUserDetailsEntity,Long> {
     Optional<AppUserDetailsEntity> findBySystemUserLogin(String login);
     //added because I got stuck in createAccount Service method cause of mocks

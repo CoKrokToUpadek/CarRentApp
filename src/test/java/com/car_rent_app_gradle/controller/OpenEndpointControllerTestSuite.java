@@ -13,7 +13,7 @@ import com.car_rent_app_gradle.repository.AppUserDetailsRepository;
 import com.car_rent_app_gradle.repository.CustomerRepository;
 import com.car_rent_app_gradle.repository.EmployeeRepository;
 import com.car_rent_app_gradle.repository.VehicleRepository;
-import com.car_rent_app_gradle.service.CommonDataUserService;
+import com.car_rent_app_gradle.service.CommonDataUserServiceRecord;
 import com.car_rent_app_gradle.service.OpenEndPointsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -46,7 +46,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 @WebMvcTest(OpenEndPointsController.class)
 @Import({OpenEndPointsService.class, VehicleMapper.class,TokenService.class,JWTConfig.class
 , AppUserSpringSecurityDetailsService.class, AppUserDetailsService.class, CustomerMapper.class
-, AppUserDetailsMapper.class, CommonDataUserService.class})
+, AppUserDetailsMapper.class, CommonDataUserServiceRecord.class})
 @TestPropertySource("classpath:application-H2TestDb.properties")
 public class OpenEndpointControllerTestSuite {
 

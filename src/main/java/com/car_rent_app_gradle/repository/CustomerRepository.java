@@ -11,7 +11,6 @@ import java.util.Optional;
 
 
 @Repository
-@Transactional
 public interface CustomerRepository extends CrudRepository<CustomerEntity, Long> {
     Optional<CustomerEntity> findByAppUserDetails(AppUserDetailsEntity details);
 }

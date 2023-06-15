@@ -8,7 +8,6 @@ import lombok.experimental.SuperBuilder;
 import java.util.Objects;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuperBuilder

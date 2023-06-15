@@ -4,9 +4,6 @@ import com.car_rent_app_gradle.client.enums.RolesList;
 import com.car_rent_app_gradle.client.security_package.*;
 import com.car_rent_app_gradle.domain.entity.AppUserDetailsEntity;
 import com.car_rent_app_gradle.domain.entity.CustomerEntity;
-import com.car_rent_app_gradle.domain.entity.EmployeeEntity;
-import com.car_rent_app_gradle.errorhandlers.AppUserCreationExceptionAndValidationEnum;
-import com.car_rent_app_gradle.errorhandlers.VehicleExceptionAndValidationEnum;
 import com.car_rent_app_gradle.mapper.AppUserDetailsMapper;
 import com.car_rent_app_gradle.mapper.CustomerMapper;
 import com.car_rent_app_gradle.mapper.EmployeeMapper;
@@ -15,11 +12,9 @@ import com.car_rent_app_gradle.repository.AppUserDetailsRepository;
 import com.car_rent_app_gradle.repository.CustomerRepository;
 import com.car_rent_app_gradle.repository.EmployeeRepository;
 import com.car_rent_app_gradle.repository.VehicleRepository;
-import com.car_rent_app_gradle.service.CommonDataUserService;
+import com.car_rent_app_gradle.service.CommonDataUserServiceRecord;
 import com.car_rent_app_gradle.service.CustomerService;
-import com.car_rent_app_gradle.service.EmployeeService;
 import com.car_rent_app_gradle.service.OpenEndPointsService;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,10 +35,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -55,7 +47,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 @TestPropertySource("classpath:application-H2TestDb.properties")
 @Import({OpenEndPointsService.class, TokenService.class,JWTConfig.class
         , AppUserSpringSecurityDetailsService.class, AppUserDetailsService.class, CustomerService.class,EmployeeMapper.class
-        , AppUserDetailsMapper.class, CommonDataUserService.class,CustomerMapper.class,VehicleMapper.class,CustomerMapper.class})
+        , AppUserDetailsMapper.class, CommonDataUserServiceRecord.class,CustomerMapper.class,VehicleMapper.class,CustomerMapper.class})
 public class CustomerControllerTestSuite {
 
     @Autowired

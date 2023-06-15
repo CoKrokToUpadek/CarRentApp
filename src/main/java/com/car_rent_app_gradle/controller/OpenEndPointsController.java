@@ -27,7 +27,7 @@ public class OpenEndPointsController {
         this.openEndPointsService = openEndPointsService;
     }
 
-    @PostMapping("/createCustomerAccount")//ok
+    @PostMapping("/create-customer-account")//ok
     public ResponseEntity<String> createAccount(@RequestBody CustomerAccountDto customerAccountCreationDto) {
         return ResponseEntity.ok(openEndPointsService.createCustomerAccount(customerAccountCreationDto));
     }
@@ -37,7 +37,7 @@ public class OpenEndPointsController {
         return ResponseEntity.ok(openEndPointsService.generateToken(authentication));
     }
 
-    @GetMapping("/getVehicleListForClients")//ok
+    @GetMapping("/get-vehicleL-list-for-clients")//ok
     public ResponseEntity<List<VehicleForCustomersDto>> getVehicleListForClients() throws VehicleListIsEmptyException {
         return ResponseEntity.ok(openEndPointsService.getVehicleListForClients());
     }
@@ -49,7 +49,7 @@ public class OpenEndPointsController {
 
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")//ok
-    @GetMapping("/helloAuthorized")//for testing purposes
+    @GetMapping("/hello-authorized")//for testing purposes
     public ResponseEntity<String> getTestMessageAuthorized() {
         return ResponseEntity.ok("hello from closed endpoint");
     }

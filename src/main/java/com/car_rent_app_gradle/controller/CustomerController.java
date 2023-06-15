@@ -23,22 +23,22 @@ public class CustomerController {
     CustomerService customerService;
 
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
-    @PostMapping("/rentNewVehicle")
+    @PostMapping("/rent-new-vehicle")
     public ResponseEntity<String> rentNewVehicle(@CurrentSecurityContext SecurityContext context,@RequestParam Long carId){
         return ResponseEntity.ok("ok mk");
     }
-    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
-    @PutMapping("/changePersonalInformation")
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")//ok
+    @PutMapping("/change-personal-information")
     public ResponseEntity<String> changePersonalInformation(@CurrentSecurityContext SecurityContext context, @RequestBody CustomerDto customerDto){
         return new ResponseEntity(customerService.changePersonalInformation(context.getAuthentication().getName(),customerDto), HttpStatus.OK);
     }
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
-    @PutMapping("/cancelVehicleReservation")
+    @PutMapping("/cancel-vehicle-reservation")
     public ResponseEntity<String> cancelVehicleReservation(@CurrentSecurityContext SecurityContext context,@RequestParam Long carId){//need security context
         return ResponseEntity.ok("ok mk");
     }
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
-    @DeleteMapping("/getAllMyReservations")
+    @DeleteMapping("/get-all-my-Reservations")
     public ResponseEntity<List<ReservationDto>> getVehicleReservationList(@CurrentSecurityContext SecurityContext context){//need security context
         List<ReservationDto> reservationsList=new ArrayList<>();
         return new ResponseEntity(reservationsList, HttpStatus.OK);

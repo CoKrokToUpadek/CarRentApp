@@ -9,7 +9,6 @@ import com.car_rent_app_gradle.errorhandlers.ApplicationDataBaseException;
 import com.car_rent_app_gradle.mapper.CustomerMapper;
 import com.car_rent_app_gradle.repository.AppUserDetailsRepository;
 import com.car_rent_app_gradle.repository.CustomerRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +17,11 @@ import java.util.Arrays;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class CustomerService {
-    private CustomerRepository customerRepository;
-    private CustomerMapper customerMapper;
-    private AppUserDetailsRepository appUserDetailsRepository;
+
+    private final CustomerRepository customerRepository;
+    private final CustomerMapper customerMapper;
+    private final AppUserDetailsRepository appUserDetailsRepository;
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper,

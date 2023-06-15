@@ -30,30 +30,30 @@ import java.util.List;
 @Transactional
 public class EmployeeService {
 
-    VehicleRepository vehicleRepository;
-    EmployeeRepository employeeRepository;
-    EmployeeMapper employeeMapper;
-    VehicleMapper vehicleMapper;
-    AppUserDetailsRepository appUserDetailsRepository;
+    private final   VehicleRepository vehicleRepository;
+    private final  EmployeeRepository employeeRepository;
+    private final  EmployeeMapper employeeMapper;
+    private final   VehicleMapper vehicleMapper;
+    private final   AppUserDetailsRepository appUserDetailsRepository;
 
-    PasswordEncoder encoder;
+    private final   PasswordEncoder encoder;
 
-    CommonDataUserService commonDataUserService;
+    private final CommonDataUserServiceRecord commonDataUserServiceRecord;
 
-    AppUserDetailsMapper appUserDetailsMapper;
+    private final    AppUserDetailsMapper appUserDetailsMapper;
 
 
     public EmployeeService(VehicleRepository vehicleRepository, EmployeeRepository employeeRepository,
                            EmployeeMapper employeeMapper, VehicleMapper vehicleMapper,
                            AppUserDetailsRepository appUserDetailsRepository, PasswordEncoder encoder,
-                           CommonDataUserService commonDataUserService, AppUserDetailsMapper appUserDetailsMapper) {
+                           CommonDataUserServiceRecord commonDataUserServiceRecord, AppUserDetailsMapper appUserDetailsMapper) {
         this.vehicleRepository = vehicleRepository;
         this.employeeRepository = employeeRepository;
         this.employeeMapper = employeeMapper;
         this.vehicleMapper = vehicleMapper;
         this.appUserDetailsRepository = appUserDetailsRepository;
         this.encoder = encoder;
-        this.commonDataUserService = commonDataUserService;
+        this.commonDataUserServiceRecord = commonDataUserServiceRecord;
         this.appUserDetailsMapper = appUserDetailsMapper;
     }
 
@@ -61,7 +61,7 @@ public class EmployeeService {
         EmployeeEntity employeeEntity;
         AppUserDetailsEntity appUserDetailsEntity;
 
-        String dtoVerification=commonDataUserService.validateUserCreationDto(employeeAccountCreationDto, RolesList.ROLE_EMPLOYEE);
+        String dtoVerification= commonDataUserServiceRecord.validateUserCreationDto(employeeAccountCreationDto, RolesList.ROLE_EMPLOYEE);
         if(!dtoVerification.equals(AppUserCreationExceptionAndValidationEnum.VALIDATION_PASS.getValue())){
             return dtoVerification;
         }
