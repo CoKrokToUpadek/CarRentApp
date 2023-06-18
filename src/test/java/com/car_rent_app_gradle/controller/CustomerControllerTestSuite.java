@@ -38,7 +38,6 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 
@@ -99,7 +98,7 @@ public class CustomerControllerTestSuite {
         when(appUserDetailsRepository.findBySystemUserLogin("admin")).thenReturn(Optional.of(entity));
         when(customerRepository.findByAppUserDetails(entity)).thenReturn(Optional.of(customerEntity));
         //when & then
-        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.put("/customer/changePersonalInformation").with(httpBasic("admin","admin"))
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.put("/customer/change-personal-information").with(httpBasic("admin","admin"))
                         .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
                     .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         Assertions.assertEquals("Personal information data changed successfully.", result.getResponse().getContentAsString());
@@ -118,7 +117,7 @@ public class CustomerControllerTestSuite {
         when(appUserDetailsRepository.findBySystemUserLogin("admin")).thenReturn(Optional.of(entity));
         when(customerRepository.findByAppUserDetails(entity)).thenReturn(Optional.of(customerEntity));
         //when & then
-        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.put("/customer/changePersonalInformation").with(httpBasic("admin","admin"))
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.put("/customer/change-personal-information").with(httpBasic("admin","admin"))
                         .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         Assertions.assertEquals("Fields are empty or missing. Check if all fields were mapped properly.", result.getResponse().getContentAsString());

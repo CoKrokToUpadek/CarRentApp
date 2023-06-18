@@ -37,7 +37,7 @@ public class OpenEndPointsController {
         return ResponseEntity.ok(openEndPointsService.generateToken(authentication));
     }
 
-    @GetMapping("/get-vehicleL-list-for-clients")//ok
+    @GetMapping("/get-vehicle-list-for-clients")//ok
     public ResponseEntity<List<VehicleForCustomersDto>> getVehicleListForClients() throws VehicleListIsEmptyException {
         return ResponseEntity.ok(openEndPointsService.getVehicleListForClients());
     }

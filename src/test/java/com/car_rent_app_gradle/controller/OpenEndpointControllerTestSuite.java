@@ -93,13 +93,13 @@ public class OpenEndpointControllerTestSuite {
 
     @Test//ok
     void invalidBasicAuthClosedTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/helloAuthorized").
+        mockMvc.perform(MockMvcRequestBuilders.get("/hello-authorized").
                 contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().is(401));
     }
 
     @Test//ok
     void validBasicAuthClosedTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/helloAuthorized").with(httpBasic("admin","admin")).
+        mockMvc.perform(MockMvcRequestBuilders.get("/hello-authorized").with(httpBasic("admin","admin")).
                 contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().is(200));
     }
 
@@ -115,7 +115,7 @@ public class OpenEndpointControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         TokenAndRoleDto dto=mapper.readValue(result.getResponse().getContentAsString(),TokenAndRoleDto.class);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/helloAuthorized")
+        mockMvc.perform(MockMvcRequestBuilders.get("/hello-authorized")
                         .header("Authorization","Bearer "+dto.getToken()))
                .andExpect(MockMvcResultMatchers.status().is(200));
 
@@ -131,7 +131,7 @@ public class OpenEndpointControllerTestSuite {
     void createCustomerAccountMissingInformationTest() throws Exception {
         File jsonFile = new File("src/test/resources/testCustomerInvalid.json");
         byte[] jsonBytes = Files.readAllBytes(jsonFile.toPath());
-        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/createCustomerAccount")
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/create-customer-account")
                         .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         Assertions.assertEquals("Information provided in form was incomplete or invalid.", result.getResponse().getContentAsString());
@@ -141,7 +141,7 @@ public class OpenEndpointControllerTestSuite {
     void createCustomerAccountValidTest() throws Exception {
         File jsonFile = new File("src/test/resources/testCustomerValid.json");
         byte[] jsonBytes = Files.readAllBytes(jsonFile.toPath());
-        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/createCustomerAccount")
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/create-customer-account")
                         .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         Assertions.assertEquals("Customer was created successfully.", result.getResponse().getContentAsString());
@@ -151,7 +151,7 @@ public class OpenEndpointControllerTestSuite {
     @Test
     void getVehicleListValidTest() throws Exception {
 
-        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.get("/getVehicleListForClients")
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.get("/get-vehicle-list-for-clients")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         Assertions.assertEquals("No vehicles available", result.getResponse().getContentAsString());
@@ -165,7 +165,7 @@ public class OpenEndpointControllerTestSuite {
         vehicle.setEmployeeThatRegisteredVehicle(new EmployeeEntity());
         when(vehicleRepository.findAllByVehicleNoLongerAvailable(false)).thenReturn(List.of(vehicle));
 
-        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.get("/getVehicleListForClients")
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.get("/get-vehicle-list-for-clients")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         Assertions.assertEquals("[{\"id\":null,\"vehicleStatus\":\"tempStatus\",\"vehicleBrand\":\"testBrand\"," +

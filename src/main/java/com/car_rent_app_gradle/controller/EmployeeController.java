@@ -23,7 +23,7 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")//ok
-    @PostMapping("/add-mew-vehicle")
+    @PostMapping("/add-new-vehicle")
     public ResponseEntity<String> addNewVehicle(@CurrentSecurityContext SecurityContext context, @RequestBody VehicleForEmployeesDto carDto){
         return new ResponseEntity(employeeService.addNewVehicle(carDto,context),HttpStatus.OK);
     }

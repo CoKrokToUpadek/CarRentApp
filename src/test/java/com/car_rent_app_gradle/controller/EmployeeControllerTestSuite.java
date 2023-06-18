@@ -101,7 +101,7 @@ public class EmployeeControllerTestSuite {
     void addEmployeeMissingInformationTest() throws Exception {
         File jsonFile = new File("src/test/resources/testEmployeeInvalid.json");
         byte[] jsonBytes = Files.readAllBytes(jsonFile.toPath());
-        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/employee/addEmployee").with(httpBasic("admin","admin"))
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/employee/add-employee").with(httpBasic("admin","admin"))
                         .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
                     .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         Assertions.assertEquals("Information provided in form was incomplete or invalid.", result.getResponse().getContentAsString());
@@ -111,7 +111,7 @@ public class EmployeeControllerTestSuite {
     void AddEmployeeValidTest() throws Exception {
         File jsonFile = new File("src/test/resources/testEmployeeValid.json");
         byte[] jsonBytes = Files.readAllBytes(jsonFile.toPath());
-        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/employee/addEmployee").with(httpBasic("admin","admin"))
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/employee/add-employee").with(httpBasic("admin","admin"))
                         .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         Assertions.assertEquals(AppUserCreationExceptionAndValidationEnum.EMPLOYEE_ADD_SUCCESS.getValue(), result.getResponse().getContentAsString());
@@ -132,7 +132,7 @@ public class EmployeeControllerTestSuite {
         employeeEntityList.add(employee);
         when(employeeRepository.findAll()).thenReturn(employeeEntityList);
         //when & then
-        mockMvc.perform(MockMvcRequestBuilders.get("/employee/getEmployeeList").with(httpBasic("admin","admin"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/employee/get-employee-list").with(httpBasic("admin","admin"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)));
@@ -143,7 +143,7 @@ public class EmployeeControllerTestSuite {
         //given
         when(employeeRepository.findAll()).thenReturn(new ArrayList<>());
         //when & then
-        MvcResult result=     mockMvc.perform(MockMvcRequestBuilders.get("/employee/getEmployeeList").with(httpBasic("admin","admin"))
+        MvcResult result=     mockMvc.perform(MockMvcRequestBuilders.get("/employee/get-employee-list").with(httpBasic("admin","admin"))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
 
@@ -157,7 +157,7 @@ public class EmployeeControllerTestSuite {
         when(appUserDetailsRepository.findBySystemUserLogin("admin")).thenReturn(Optional.of(entity));
         File jsonFile = new File("src/test/resources/newVehicleValid.json");
         byte[] jsonBytes = Files.readAllBytes(jsonFile.toPath());
-        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/employee/addNewVehicle").with(httpBasic("admin","admin"))
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/employee/add-new-vehicle").with(httpBasic("admin","admin"))
                         .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         Assertions.assertEquals(VehicleExceptionAndValidationEnum.VEHICLE_ADD_SUCCESS.getValue(), result.getResponse().getContentAsString());
@@ -169,7 +169,7 @@ public class EmployeeControllerTestSuite {
         when(appUserDetailsRepository.findBySystemUserLogin("admin")).thenReturn(Optional.of(entity));
         File jsonFile = new File("src/test/resources/newVehicleInvalid.json");
         byte[] jsonBytes = Files.readAllBytes(jsonFile.toPath());
-        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/employee/addNewVehicle").with(httpBasic("admin","admin"))
+        MvcResult result=  mockMvc.perform(MockMvcRequestBuilders.post("/employee/add-new-vehicle").with(httpBasic("admin","admin"))
                         .contentType(MediaType.APPLICATION_JSON).content(jsonBytes))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
         Assertions.assertEquals(VehicleExceptionAndValidationEnum.VEHICLE_DATA_MISSING_EXCEPTION.getValue(), result.getResponse().getContentAsString());
